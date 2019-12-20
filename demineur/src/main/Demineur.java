@@ -3,7 +3,7 @@ package main;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import grille.Coordonnee;
+//import grille.Coordonnee;
 
 public class Demineur {
 	

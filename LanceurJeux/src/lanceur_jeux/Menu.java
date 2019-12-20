@@ -60,6 +60,7 @@ public class Menu extends JFrame {
 		bouton.addActionListener(new ActionListener() { 
 			
 		    public void actionPerformed(ActionEvent e) { 
+		    	//TODO - Pour lancer d'autres application, modifier le chemin ci-dessous
 		        File file = new File("D:\\Anne-Camille\\Documents\\I2\\Logiciels Et Donnes\\test_demineur.jar");		        
 		        Desktop desktop = Desktop.getDesktop();
 		        if(file.exists())
