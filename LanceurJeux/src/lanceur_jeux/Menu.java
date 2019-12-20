@@ -2,11 +2,15 @@ package lanceur_jeux;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,11 +58,19 @@ public class Menu extends JFrame {
 	
 	public void linkButton(JButton bouton) {
 		bouton.addActionListener(new ActionListener() { 
+			
 		    public void actionPerformed(ActionEvent e) { 
-		    	//TODO - Lancer application
-		        System.out.print("ok ");
-		    } 
-		});
+		    	//TODO - Pour lancer d'autres application, modifier le chemin ci-dessous
+		        File file = new File("D:\\Anne-Camille\\Documents\\I2\\Logiciels Et Donnes\\test_demineur.jar");		        
+		        Desktop desktop = Desktop.getDesktop();
+		        if(file.exists())
+					try {
+						desktop.open(file);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+		    }
+		});		
 	}
 	
 	public void addTitre(JPanel panel) {
