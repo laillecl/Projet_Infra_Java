@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+D:\Anne-Camille\Documents\I2\Logiciels Et Donnes\Projet_Infra_Et_Java\Projet_Infra_Java\Demineur\.metadata\.plugins\org.eclipse.jdt.core
+1248545562.index
+1607996537.index

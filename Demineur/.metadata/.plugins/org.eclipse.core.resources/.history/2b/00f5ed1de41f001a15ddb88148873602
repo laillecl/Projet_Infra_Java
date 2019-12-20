@@ -1,0 +1,30 @@
+package demineur;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.JFrame;
+
+import demineur.vue.ihm.Grille;
+
+public class Demineur {
+	
+	// Création de la fenètre
+	JFrame frame = new JFrame();
+	//Grille g = new Grille();
+	frame.setTitle("Demineur");
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	/*
+	// CrÃ©ation du Panneau barre d'outil
+	PanneauBarreOutils pBO = new PanneauBarreOutils(p);
+	
+	// Affichage
+	frame.add(p);
+
+	// Ajout du panneau barre d'outil
+	frame.add(pBO, BorderLayout.WEST);
+	frame.pack();
+	frame.setLocationRelativeTo(null);
+	frame.setVisible(true);
+	*/
+}

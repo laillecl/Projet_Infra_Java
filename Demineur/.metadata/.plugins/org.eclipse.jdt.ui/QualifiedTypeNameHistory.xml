@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="javax.swing.JPanel"/>
+    <fullyQualifiedTypeName name="java.awt.Dimension"/>
+    <fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="javax.swing.border.Border"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="java.awt.Polygon"/>
+    <fullyQualifiedTypeName name="demineur.controleur.action.Action"/>
+    <fullyQualifiedTypeName name="demineur.vue.ihm.Grille"/>
+    <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
+    <fullyQualifiedTypeName name="demineur.controleur.action.ActionClic"/>
+    <fullyQualifiedTypeName name="demineur.controleur.outils.Coordonnees"/>
+    <fullyQualifiedTypeName name="java.awt.Canvas"/>
+    <fullyQualifiedTypeName name="demineur.vue.Case"/>
+    <fullyQualifiedTypeName name="demineur.controleur.action.Dessin"/>
+    <fullyQualifiedTypeName name="java.awt.Frame"/>
+    <fullyQualifiedTypeName name="java.awt.Graphics"/>
+</qualifiedTypeNameHistroy>

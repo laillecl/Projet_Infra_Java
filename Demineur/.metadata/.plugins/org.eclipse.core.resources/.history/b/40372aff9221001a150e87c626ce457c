@@ -1,0 +1,41 @@
+package demineur;
+
+
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+
+import demineur.controleur.action.Action;
+import demineur.controleur.action.ActionClic;
+import demineur.controleur.action.Dessin;
+import demineur.vue.ihm.Grille;
+
+public class Demineur extends Frame {
+    Dessin dessin = null;
+
+    Demineur() {
+    	super("Demineur");  // Titre de la fenetre
+    	add(dessin = new Dessin());
+
+    	pack();  // on calcule la taille ad hoc de la fenetre (methode interne de java)
+    	setVisible(true); // Enfin on affiche la fenetre
+    }
+
+    public void paint(Graphics g) {
+	dessin.repaint();
+    }
+	
+	public static void main(String[] args) {
+		// Création de la fenètre
+		Grille app = new Grille(600, 600);
+		app.addWindowListener(new WindowAdapter() {
+					public void windowClosing( WindowEvent e )
+					{
+						System.exit( 0 );
+					}
+				});
+	}
+}

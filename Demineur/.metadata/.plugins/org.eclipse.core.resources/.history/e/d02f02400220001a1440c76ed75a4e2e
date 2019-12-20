@@ -1,0 +1,64 @@
+package demineur.controleur.action;
+
+import java.awt.event.MouseEvent;
+
+import javax.swing.event.MouseInputListener;
+
+import demineur.controleur.outils.Coordonnees;
+import demineur.vue.ihm.Grille;
+
+import java.awt.event.MouseEvent;
+
+public abstract class Action implements MouseInputListener {
+	
+	//variables
+	private Grille grille;
+	private Coordonnees debut;
+	private Coordonnees fin;
+	
+	
+	public Action() {
+		this.grille = new Grille();
+	}
+
+	public Coordonnees getDebut() {
+		return debut;
+	}
+
+	public Coordonnees getFin() {
+		return fin;
+	}
+
+	public void setDebut(Coordonnees c) {
+		this.debut = c;
+	}
+
+	public void setFin(Coordonnees c) {
+		this.fin = c;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		this.setDebut(new Coordonnees(e.getX(), e.getY()));
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		this.setFin(new Coordonnees(e.getX(), e.getY()));
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {}
+}

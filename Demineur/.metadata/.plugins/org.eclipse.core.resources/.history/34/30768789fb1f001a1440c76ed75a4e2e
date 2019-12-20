@@ -1,0 +1,14 @@
+package demineur.controleur.action;
+
+import java.awt.event.MouseEvent;
+
+public class Action {
+	
+}
+
+public void mouseClicked(MouseEvent evt)
+{
+	int x = (int) (evt.getX()+evt.getComponent().getLocation().getX());
+	int y = (int) (evt.getX()+evt.getComponent().getLocation().getY());
+	System.out.print(x,y);
+}
