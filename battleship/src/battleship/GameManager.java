@@ -3,7 +3,6 @@ package battleship;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import battleship.ihm.Grid;
 import battleship.ihm.SmallGrid;
@@ -30,8 +29,8 @@ public class GameManager {
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(900, 640));
-		frame.setMinimumSize(new Dimension(900, 640));
+		frame.setPreferredSize(new Dimension(910, 640));
+		frame.setMinimumSize(new Dimension(910, 640));
 		frame.setResizable(false);
 		frame.setTitle("Battleship");
 		frame.pack();
@@ -41,18 +40,16 @@ public class GameManager {
 	{
 		this.setUpWindow();
 		Grid grid = new Grid(gridSize);
-		SmallGrid small = new SmallGrid(gridSize);
-		small.setLocation(grid.getWidth()+10, grid.getY());
+		SmallGrid smallGrid = new SmallGrid(gridSize);
+		smallGrid.setLocation(grid.getWidth()+10, grid.getY());
 		
-		//panel.setLayout(null);
-		
-		int windowWidth = small.getX() + small.getWidth() + 10;
+		int windowWidth = smallGrid.getX() + smallGrid.getWidth() + 10;
 		frame.setPreferredSize(new Dimension(windowWidth, frame.getHeight())); 
 		frame.setSize(frame.getPreferredSize());
 		frame.pack();
 		
 		frame.getContentPane().add(grid); // adds the grids to the window
-		frame.getContentPane().add(small);
+		frame.getContentPane().add(smallGrid);
 		frame.addMouseListener(grid);
 		frame.setVisible(true);
 	}
