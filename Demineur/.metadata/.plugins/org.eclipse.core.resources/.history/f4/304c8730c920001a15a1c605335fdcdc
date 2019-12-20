@@ -1,0 +1,46 @@
+package demineur.vue.ihm;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Grille extends JFrame {
+	//Variables
+	int longueur;
+	int largeur;
+	int LONGUEUR_PAR_DEFAULT = 600;
+	int LARGEUR_PAR_DEFAULT = 600;
+	
+public Grille(int longueur, int largeur)
+{
+	super("Démineur");
+	setSize(longueur , largeur);
+	this.longueur = longueur;
+	this.largeur = largeur;
+	show();
+}
+
+public Grille() {
+	super("Démineur");
+	setSize(LONGUEUR_PAR_DEFAULT , LARGEUR_PAR_DEFAULT);
+	this.longueur = LONGUEUR_PAR_DEFAULT;
+	this.largeur = LARGEUR_PAR_DEFAULT;
+	show();
+}
+
+public void paint( Graphics g )
+{
+	int origineX = 0;
+	int origineY = 0;
+	int nbLignes = 6;
+	int interligne = this.longueur/ nbLignes /2;
+	
+	//On affiche les cases
+	for(int i=0; i<nbLignes +1; i++) {
+		g.drawLine(origineX, origineY + this.longueur/nbLignes * i, this.longueur, origineY + this.longueur/nbLignes * i);
+		g.drawLine(origineY + this.largeur/nbLignes * i, origineX , origineY + this.largeur/nbLignes * i, this.largeur);
+	}
+	
+}
+	
+}

@@ -1,0 +1,54 @@
+package demineur.vue;
+
+import java.awt.Graphics;
+
+import demineur.controleur.outils.Coordonnees;
+
+public abstract class Case {
+	
+	public static void main(String[] args) {
+		Case cases = new Case();
+	}
+	public static final int TAILLE_PAR_DEFAULT = 17;  // Taille d une case du demineur
+    public static final double RATIO_PAR_DEFAULT = 2.0/15.0;
+    public static final int MARQUEE = 2, DECOUVERTE = 1;
+    public int statut;
+    public static Case tableau[][] = null;
+    public double abscisse;
+    public double ordonnees;
+    //TODO - changer valeurs
+    static int hauteur = 600;
+	static int largeur = 600;
+	public static final int tailleCase = 17;
+	static int x = 2;
+	static int y = 3;
+    
+    Case(Coordonnees coord){
+    	this.abscisse = coord.getAbscisse();
+    	this.ordonnees = coord.getOrdonnee();
+    }
+    
+    public boolean estDecouverte() {
+    	return (statut == DECOUVERTE);
+    }
+    
+    boolean estMarquee() {
+    	return (statut == MARQUEE);
+    }
+    
+    //TODO - DESSINER LES CASES
+    
+    public static void paintAll(Graphics g) {
+    	if (tableau != null) {
+    	    for (int i = 0 ; i < largeur; i++)
+    		for(int j = 0 ; j < hauteur; j++)
+    		    tableau[i][j].paint(g);
+    	}
+    }
+
+        // Dessine la case
+        public void paint(Graphics g) {	
+        	g.drawString(""+this,tailleCase*x+tailleCase/3,tailleCase*y+tailleCase*2/3);
+        }
+    
+}

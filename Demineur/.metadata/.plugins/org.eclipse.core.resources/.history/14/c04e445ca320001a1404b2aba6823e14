@@ -1,0 +1,8 @@
+package demineur.vue;
+
+public abstract class Case {
+
+	public static void initJeu  (int longeur, int longueur) {
+		
+	}
+}

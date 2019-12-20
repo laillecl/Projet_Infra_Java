@@ -1,0 +1,33 @@
+package demineur.controleur.action;
+
+import java.awt.Canvas;
+import java.awt.Graphics;
+
+import demineur.vue.Case;
+
+public class Dessin extends Canvas{
+
+	public Dessin() {
+		super();
+		changeTaille(20,20);
+		
+	    }
+	    
+	    public int largeur() {
+		return Case.largeur;
+	    }
+
+	    public int hauteur() {
+		return Case.hauteur;
+	    }
+
+	    public void changeTaille(int l,int h) {
+		Case.initJeu(l,h);
+		setSize(largeur()*Case.tailleCase,hauteur()*Case.tailleCase);
+	    }
+
+	    public void paint(Graphics g) {
+		// Placer ici les fonctions de dessin
+		Case.paintAll(g);
+	    }
+}

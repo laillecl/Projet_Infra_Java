@@ -1,0 +1,32 @@
+package demineur;
+
+
+import javax.swing.JFrame;
+
+public class Demineur {
+	
+	public static void main(String[] args) {
+		// Création de la fenètre
+		JFrame frame = new JFrame();
+		frame.setTitle("test");
+	}
+	
+	
+	//Grille g = new Grille();
+	//frame.setTitle("Demineur");
+	//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	/*
+	// CrÃ©ation du Panneau barre d'outil
+	PanneauBarreOutils pBO = new PanneauBarreOutils(p);
+	
+	// Affichage
+	frame.add(p);
+
+	// Ajout du panneau barre d'outil
+	frame.add(pBO, BorderLayout.WEST);
+	frame.pack();
+	frame.setLocationRelativeTo(null);
+	frame.setVisible(true);
+	*/
+}

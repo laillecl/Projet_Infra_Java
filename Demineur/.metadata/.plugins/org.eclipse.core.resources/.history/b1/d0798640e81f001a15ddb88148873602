@@ -1,0 +1,16 @@
+package demineur;
+
+
+import javax.swing.JFrame;
+
+public class Demineur {
+	
+	public static void main(String[] args) {
+		// Création de la fenètre
+		JFrame frame = new JFrame();
+		frame.setTitle("Demineur");
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+}
