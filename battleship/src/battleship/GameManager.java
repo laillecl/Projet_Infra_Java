@@ -1,7 +1,12 @@
 package battleship;
 
-import battleship.components.Boat;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import battleship.ihm.Grid;
+import battleship.ihm.SmallGrid;
 
 public class GameManager {
 	
@@ -14,22 +19,43 @@ public class GameManager {
 	public static int submarineAmount = 1;
 	public static int destroyerAmount = 1;
 	
-	// Keep track of boats
-	private Boat[] Player1Boats;
-	private Boat[] Player2Boats;
-	
-	// Grid instance
-	private Grid grid;
+	// Frame instance
+	private JFrame frame;
 	
 	// TODO Players
 	
-	GameManager()
-	{
-		// Instanciate grid
-		// Instanciate p1, p2 boats
+	public void setUpWindow() {
+		frame = new JFrame();
 		
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setBackground(Color.WHITE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(900, 640));
+		frame.setMinimumSize(new Dimension(900, 640));
+		frame.setResizable(false);
+		frame.setTitle("Battleship");
+		frame.pack();
 	}
 	
+	public void startGame()
+	{
+		this.setUpWindow();
+		Grid grid = new Grid(gridSize);
+		SmallGrid small = new SmallGrid(gridSize);
+		small.setLocation(grid.getWidth()+10, grid.getY());
+		
+		//panel.setLayout(null);
+		
+		int windowWidth = small.getX() + small.getWidth() + 10;
+		frame.setPreferredSize(new Dimension(windowWidth, frame.getHeight())); 
+		frame.setSize(frame.getPreferredSize());
+		frame.pack();
+		
+		frame.getContentPane().add(grid); // adds the grids to the window
+		frame.getContentPane().add(small);
+		frame.addMouseListener(grid);
+		frame.setVisible(true);
+	}
 	
 	
 	
