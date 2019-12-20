@@ -1,22 +1,18 @@
 package lanceur_jeux;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-//TODO - Centrer les boutons
-//TODO - Ajouter un fond d'écran
+
 //TODO - Relier bouton Démineur à Demineur.java
 
 public class Menu extends JFrame {  
@@ -24,10 +20,7 @@ public class Menu extends JFrame {
 	
 	public Menu() {
 		super();
-		//JPanel panel = new JPanel();
-		 
-		 //TEST FOND D ECRAN
-		
+		//Ajout d'un fond d'écran
 	    JPanel panel = new JPanel(){
             protected void paintComponent(Graphics g) 
             {
@@ -38,12 +31,12 @@ public class Menu extends JFrame {
             }
         };
 		panel.repaint();
-        
+		//Ajout des éléments sur le panel
 		this.addButton(this);
 	    this.addTitre(panel);
 	    this.add(panel);
 	    this.setSize(400,400); 
-	    this.show(); 
+	    this.setVisible(true); 
 	    this.setLayout(null);  
 	    this.setVisible(true);  
 	}
@@ -72,7 +65,7 @@ public class Menu extends JFrame {
 	    label.setFont(new Font("Serif Bold", Font.BOLD, 30));
 	    panel.add(label);
 	}
-	
+
 
 	public static void main(String[] args) {  
 	     new Menu();
