@@ -1,5 +1,0 @@
-package demineur.controleur.action;
-
-public class ActionClic extends Action {
-
-}

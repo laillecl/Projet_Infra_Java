@@ -1,5 +1,0 @@
-package demineur.vue;
-
-public class CaseChiffre extends Case {
-
-}
