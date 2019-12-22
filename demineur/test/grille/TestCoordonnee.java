@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import components.Coordonnee;
+
 public class TestCoordonnee {
 	
 	@Test

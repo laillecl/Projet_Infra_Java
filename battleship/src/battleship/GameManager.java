@@ -23,7 +23,6 @@ public class GameManager {
 	private JFrame frame;
 	
 	// TODO Players
-	
 	public void setUpWindow() {
 		frame = new JFrame();
 		
