@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+         <link href="connexionMiniJeux.css" media="all" rel="stylesheet" type="text/css" />
+        <title> Connexion aux mini jeux </title>
+    </head>
+
+    <body>
+    	<div style="text-align: center; background-image: url('image.png');">
+    			<!--TODO - A CHANGER -->
+		  		<br><br>
+			    <h1> <font color="white">Connexion aux mini jeux </font> </h1>
+			    <form action="verificationConnexion.php" method="post">
+			        <p>
+			        <label for="login"><font color="white">Login  </font></label> : <input type="text" name="login" id="login" /><br /><br />
+			        <label for="motdepasse"><font color="white">Mot de passe </font></label> :  <input type="password" name="motdepasse" id="motdepasse" /><br />
+			        <br /><input type="submit" value="Envoyer" />
+				   </p>
+    			</form>
+
+   
+		    <br>
+		  <button id="myBtn">Inscription à la bibliothèque de jeux</button>
+		  <script>
+		    var btn = document.getElementById('myBtn');
+		    btn.addEventListener('click', function() {
+		      document.location.href = 'D:/Anne-Camille/Documents/I2/Logiciels Et Donnes/Projet_Infra_Et_Java/Projet_Infra_Java/PHP/inscriptionBibliotheque.html';
+		    });
+		  </script>
+
+		  <!--TODO - A CHANGER -->
+		  <br><br><br><br><br><br><br><br><br><br><br><br>
+		  </div>
+    <!--
+    <?php
+    /*
+	$url = "formulaireBaseDeDonnees.php";
+    $texte = "<br> Creation d'un compte";
+    echo '<a href = "'.$url.'">'.$texte.'</a>';
+    ?>
+    */
+    -->
+
+    </body>
+
+</html>
