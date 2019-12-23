@@ -1,47 +1,71 @@
 package components;
 
-import java.awt.Graphics;
+public class Case {
 
-public class Case{
+	//constants
+	public static final int DEFAULT_POSITION_X = 0;
+	public static final int DEFAULT_POSITION_Y = 0;
+	public static final int DEFAULT_TILE_TYPE = 0;
+
+	// attributes
+	public int positionX;
+	public int positionY;
+	public boolean isClicked;
+	public int tileType;	// 0 si case normale, 1 si case vide, 2 si bombe
 	
-	public int type = 0;
-	// type = 0 si case vide, type = 1 si case bord, type = 2 si bombe
-	public boolean estDevoile = false;
-	public Coordonnee coordonnee = new Coordonnee();
-	public static int taille = 25;
 	
-	public Case(Coordonnee coordonnee, int type) {
-		this.coordonnee = coordonnee;
-		this.type = type;
-		this.estDevoile = false;
+	//constructors 	
+	public Case(int X, int Y, int type){
+		this.positionX = X;
+		this.positionY = Y;	
+		this.tileType = type ;
+		this.isClicked = false;
 	}
 	
-	public void setcoordonnee(Coordonnee coordonnee) {
-		this.coordonnee = coordonnee;
+	public Case(int X, int Y){
+		this.positionX = X;
+		this.positionY = Y;	
+		this.tileType = DEFAULT_TILE_TYPE;
+		this.isClicked = false;
 	}
 	
-	public void setType (int type) {
-		this.type = type;
+	public Case() {
+		this.positionX = DEFAULT_POSITION_X;
+		this.positionY = DEFAULT_POSITION_Y;
+		this.tileType = DEFAULT_TILE_TYPE;
+		this.isClicked = false;
 	}
 	
-	public void setDevoile(boolean estDevoile) {
-		this.estDevoile = estDevoile;
+	
+	
+	//getters
+	public int getPositionX() {
+		return this.positionX;
+	}
+	public int getPositionY() {
+		return this.positionY;
+	}
+	public int getTileType() {
+		return this.tileType;
 	}
 	
-	public Coordonnee getCoordonne() {
-		return this.coordonnee;
+	public boolean getIsClicked() {
+		return this.isClicked;
 	}
 	
-	public int getType() {
-		return this.type;
+	//setters
+	public void setPositionX(int position) {
+		this.positionX = position;
 	}
-	
-	public boolean getEstDevoile() {
-		return this.estDevoile;
+	public void setPositionY(int position) {
+		this.positionY = position;
 	}
 
-	public static void paintAll(Graphics g) {
-		// TODO Auto-generated method stub
+	public void setTileType(int tileType) {
+		this.tileType = tileType;;
 	}
-
+	
+	public void setIsClicked(boolean isClicked) {
+		this.isClicked = isClicked;
+	}
 }
