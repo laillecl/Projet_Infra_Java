@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>bombIcon.png</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Desktop/bombIcon.png</locationURI>
+		</link>
+		<link>
+			<name>flagIcon.png</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/Desktop/flagIcon.png</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
