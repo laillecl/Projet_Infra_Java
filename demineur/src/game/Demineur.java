@@ -12,6 +12,7 @@ public class Demineur implements Runnable{
     public void run() {
     	while(true) {
     		ihm.repaint();
+    		ihm.checkVictoryStatus();
     	}
     	
     }
