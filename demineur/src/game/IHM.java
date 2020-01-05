@@ -13,7 +13,7 @@ public class IHM extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	boolean def = false;
+	static boolean def = false;
 
 	public IHM() {
 		this.setTitle("Demineur");
@@ -44,13 +44,13 @@ public class IHM extends JFrame{
 		
 	}
 	
-	private void setDef(boolean b) {
+	public void setDef(boolean b) {
 		this.def = b;
 		
 	}
 
-	public boolean getDef() {
-		return this.def;
+	public static boolean getDef() {
+		return def;
 	}
 
 	public void checkVictoryStatus() {
