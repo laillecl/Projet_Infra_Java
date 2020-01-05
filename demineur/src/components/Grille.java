@@ -41,7 +41,7 @@ public class Grille extends JPanel implements MouseListener{
 		this.matrice = new Case[size][size];
 		construireMatrice();
 	}
-	
+
 	public Grille() {
 		this.size = GRID_SIZE;
 		this.matrice = new Case[size][size];
