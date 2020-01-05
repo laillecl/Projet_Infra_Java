@@ -1,28 +1,48 @@
-verification connexion
-
 <?php
-	// Connexion, sélection de la base de données
-	$dbconn = pg_connect("host=localhost dbname=publishing user=www password=foo")
-	    or die('Connexion impossible : ' . pg_last_error());
-/*
-	// Exécution de la requête SQL
-	$query = 'SELECT * FROM authors';
-	$result = pg_query($query) or die('Échec de la requête : ' . pg_last_error());
+try
+{
+	// On se connecte à MySQL
+	$bdd = new PDO('mysql:host=localhost;dbname=projet_infra;charset=utf8', 'root', '');
+}
+catch(Exception $e)
+{
+	// En cas d'erreur, on affiche un message et on arrête tout
+        die('Erreur : '.$e->getMessage());
+}
+	
+	// On récupère tout le contenu de la table utilisateurs
+	$reponse = $bdd->query('SELECT * FROM utilisateur');
+	$marqueur = 0;
 
-	// Affichage des résultats en HTML
-	echo "<table>\n";
-	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-	    echo "\t<tr>\n";
-	    foreach ($line as $col_value) {
-	        echo "\t\t<td>$col_value</td>\n";
-	    }
-	    echo "\t</tr>\n";
+	// On regarde les entrées une à une
+	while ($donnees = $reponse->fetch())
+	{
+		//On regarde si les login et mots de passe sont bons
+		if ($donnees['user_name'] == $_POST['login'] and $donnees['password'] == $_POST['motdepasse']){
+
+			// L'utilisateur est connu et peut accéder à l'application des jeux
+			//TODO - Lancer l'application des jeux sur le serveur
+			//echo exec('java -classpath testappli.jar LanceurJeux.Menu ', $output);
+			echo 'ok l utilisateur est connu';
+			?>
+
+
+
+			<?php
+
+			$marqueur = 1;
+
+		}
 	}
-	echo "</table>\n";
 
-	// Libère le résultat
-	pg_free_result($result);
-*/
-	// Ferme la connexion
-	pg_close($dbconn);
+	$reponse->closeCursor(); // Termine le traitement de la requête
+	
+	if($marqueur != 1){
+		//Retour à la page de connexion
+		$urla = "connexionMiniJeux.html";
+		echo "Login ou mot de passe eronné";
+		$textea = "<br> retour à la page de connexion";
+		echo '<a href = "'.$urla.'">'.$textea.'</a>';
+	}
+
 ?>
