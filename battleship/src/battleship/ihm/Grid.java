@@ -32,6 +32,10 @@ public class Grid extends JPanel implements MouseListener {
 	public static final int TILE_SIZE = 47; // Size of the tile spaces
 	public static final int BORDER_SIZE = 5; // size of the border between spaces
 	
+	public int mouseX;
+	public int mouseY;
+	public int xMat;
+	public int yMat;
 	
 	public Grid()
 	{
@@ -47,8 +51,8 @@ public class Grid extends JPanel implements MouseListener {
 	{
 		this.setTileMatrix(tileMatrix);
 		this.setBackground(Color.white);
-		this.setPreferredSize(new Dimension((X_ORIGIN+ this.getTileMatrix().length + 1 + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)), 
-				Y_ORIGIN+ this.getTileMatrix().length + 1 + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)));
+		this.setPreferredSize(new Dimension((X_ORIGIN + this.getTileMatrix().length + 1 + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)), 
+				Y_ORIGIN + this.getTileMatrix().length + 1 + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)));
 		this.setSize(getPreferredSize());
 		this.setLocation(0,0);
 		
@@ -61,7 +65,11 @@ public class Grid extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		this.setMouseX(e.getX());
+		this.setMouseY(e.getY());
+		this.setxMat((this.getMouseX() - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE));
+		this.setyMat((this.getMouseY() - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) - 1);
+		System.out.println("Un clic en " + this.getMouseX() + " et " + this.getMouseY() + " Les coordonnees sont " + this.getxMat() + " et " + this.getyMat());
 		
 	}
 
@@ -114,6 +122,49 @@ public class Grid extends JPanel implements MouseListener {
 
 	public void setTileMatrix(Tile[][] tileMatrix) {
 		this.tileMatrix = tileMatrix;
+	}
+
+	public int getxMat() {
+		return this.xMat;
+	}
+
+	public void setxMat(int xMat) {
+		this.xMat = xMat;
+	}
+
+	public int getyMat() {
+		return this.yMat;
+	}
+
+	public void setyMat(int yMat) {
+		this.yMat = yMat;
+	}
+
+	public int getMouseX() {
+		return this.mouseX;
+	}
+
+	public void setMouseX(int mouseX) {
+		this.mouseX = mouseX;
+	}
+
+	public int getMouseY() {
+		return this.mouseY;
+	}
+
+	public void setMouseY(int mouseY) {
+		this.mouseY = mouseY;
+	}
+	
+	public void constructMatrix(){
+		String name = "";
+		for (int i = 0; i < this.getTileMatrix().length; i++) {
+			name = String.valueOf((char)(i + 65));
+			for (int j = 0; j < this.getTileMatrix().length; j++) {
+				name += j;
+				this.getTileMatrix()[i][j] = new Tile(name, X_ORIGIN + i + 1 + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + j + 1 + ((TILE_SIZE + BORDER_SIZE) * j), TILE_SIZE+(BORDER_SIZE/2)-1);
+			}
+		}
 	}
 	
 	
