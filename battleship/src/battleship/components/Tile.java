@@ -21,7 +21,6 @@ public class Tile {
 	public boolean isClicked;
 	public int size;
 	
-	
 	//constructors 	
 	public Tile(String name, int X, int Y, int size, Color color){
 		this.tileName = name;
