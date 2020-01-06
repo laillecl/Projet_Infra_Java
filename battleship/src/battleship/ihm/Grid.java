@@ -41,7 +41,7 @@ public class Grid extends JPanel implements MouseListener {
 	{
 		this(new Tile[GRID_SIZE][GRID_SIZE], "gridLabels.png");
 	}
-
+ 
 	public Grid(int size)
 	{
 		this(new Tile[size][size], "gridLabels.png");
