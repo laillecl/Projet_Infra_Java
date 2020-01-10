@@ -31,6 +31,7 @@ public class IHM extends JFrame implements ActionListener{
 		
 		JRadioButton flag = new JRadioButton("flag");
 		this.add(flag);
+		flag.addActionListener(this);
 		
 		Button reset = new Button("reset");
 		reset.setEnabled(true);
@@ -38,29 +39,29 @@ public class IHM extends JFrame implements ActionListener{
 		this.add(reset);
 		this.setVisible(true);
 		
-		if (flag.isSelected()){
-			System.out.println("AaaaAAAs");
-			if(grille.getDrapo() == false) {
-				grille.setDrapo(true);
-			}
-			else {
-				grille.setDrapo(false);
-			}
-		    
-		}   
+//		if (flag.isSelected()){
+//			System.out.println("AaaaAAAs");
+//			if(grille.getDrapo() == false) {
+//				grille.setDrapo(true);
+//			}
+//			else {
+//				grille.setDrapo(false);
+//			}
+//		    
+//		}   
+//		
+//		if (res = true) {
+//			grille.reset();
+//			res = false;
+//		}
 		
-		if (res = true) {
-			grille.reset();
-			res = false;
-		}
-		
-	}
-	
-	public void itemStateChanged() {
-		System.out.println("La");
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == flag) {
+			
+			
+		}
 		res = true;
 		System.out.println(res);
 	}
