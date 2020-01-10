@@ -78,7 +78,7 @@ public class Boat {
 	}
 
 	public boolean isShipSunk() {
-		return shipSunk;
+		return this.shipSunk;
 	}
 
 	public void setShipSunk(boolean shipSunk) {

@@ -38,6 +38,12 @@ public class GameManager {
 	public void startGame()
 	{
 		this.setUpWindow();
+		
+		// Create 2 players
+		
+		// Instanciate ships
+		
+		// Instanciate grids
 		Grid grid = new Grid(gridSize);
 		SmallGrid smallGrid = new SmallGrid(gridSize);
 		smallGrid.setLocation(grid.getWidth()+10, grid.getY());
