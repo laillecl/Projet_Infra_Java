@@ -11,9 +11,9 @@ catch(Exception $e)
 }
 	
 	// On ajoute une entrée dans la table utilisateurs
-	//TODO - MODIFIER AVEC NOTRE TABLE
+	$mdpChiffre = password_hash($_POST['motdepasse'], PASSWORD_DEFAULT); 
 	$req = $bdd->prepare('INSERT INTO utilisateur(user_name, password, email, score) VALUES(?, ?, ?, ?)');
-	$req->execute(array($_POST['login'], $_POST['motdepasse'],  $_POST['email'], 0));	
+	$req->execute(array($_POST['login'], $mdpChiffre,  $_POST['email'], 0));	
 	
 	echo "succeed";
 ?> 
