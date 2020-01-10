@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import battleship.GameManager;
 import battleship.components.Tile;
 
 public class Grid extends JPanel implements MouseListener {
@@ -41,6 +42,11 @@ public class Grid extends JPanel implements MouseListener {
 	{
 		this(new Tile[GRID_SIZE][GRID_SIZE], "gridLabels.png");
 	}
+	
+	public Grid(Tile[][] tileMatrix)
+	{
+		this(tileMatrix, "gridLabels.png");
+	}
  
 	public Grid(int size)
 	{
@@ -61,8 +67,6 @@ public class Grid extends JPanel implements MouseListener {
 		} catch (IOException e) {
 			System.out.println("Failed to load image");
 		}
-		
-		this.constructMatrix();
 	}
 
 	@Override
@@ -77,8 +81,6 @@ public class Grid extends JPanel implements MouseListener {
 			}
 			X--;
 
-			// turns the y coordinate of the mouse into a y coordinate in the
-			// grid array using MATH
 			int Y = 0;
 			while (Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * Y) + BORDER_SIZE < this.getMouseY()) {
 				Y++;
@@ -195,14 +197,5 @@ public class Grid extends JPanel implements MouseListener {
 	public void setMouseY(int mouseY) {
 		this.mouseY = mouseY;
 	}
-	
-	public void constructMatrix(){
-		for (int i = 0; i < this.getTileMatrix().length; i++) {
-			for (int j = 0; j < this.getTileMatrix().length; j++) {
-				this.getTileMatrix()[i][j] = new Tile(i, j);
-			}
-		}
-	}
-	
 	
 }

@@ -5,8 +5,11 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import battleship.ihm.Grid;
+import battleship.ihm.GridCreator;
 import battleship.ihm.SmallGrid;
 import battleship.Player;
+import battleship.components.Boat;
+import battleship.components.Tile;
 
 public class GameManager {
 	
@@ -23,7 +26,10 @@ public class GameManager {
 	// Frame instance
 	private JFrame frame;
 	
-	// TODO Players
+	private boolean gameRunning;
+	
+	public Player currentPlayer;
+	
 	public void setUpWindow() {
 		frame = new JFrame();
 		
@@ -42,38 +48,84 @@ public class GameManager {
 	{
 		this.setUpWindow();
 		
+		this.setGameRunning(true);
 		// Create 2 players
 		Player p1 = new Player(1);
 		p1.setTurn(true);
+		this.setCurrentPlayer(p1);
 		Player p2 = new Player(2);
 		
 		// Instantiate ships
-		//p1.placeBoats();
-		//p2.placeBoats();
+		Tile[][] p1Mat = this.placeBoats(this.initBoats());
+		Tile[][] p2Mat = this.placeBoats(this.initBoats());
 		// Instantiate grids
-		Grid grid = new Grid(gridSize);
+		Grid grid = new Grid(p1Mat);
 		SmallGrid smallGrid = new SmallGrid(gridSize);
 		smallGrid.setLocation(grid.getWidth()+10, grid.getY());
 		
 		int windowWidth = smallGrid.getX() + smallGrid.getWidth() + 10;
 		frame.setPreferredSize(new Dimension(windowWidth, frame.getHeight())); 
 		frame.setSize(frame.getPreferredSize());
-		frame.pack();
 		
 		frame.getContentPane().add(grid); // adds the grids to the window
 		frame.getContentPane().add(smallGrid);
 		frame.addMouseListener(grid);
 		frame.setVisible(true);
+		frame.pack();
 		
-		//instanciate turn 
+		this.gameLoop(p1, p2);
 	}
 	
 	// loop method for game turns 
-	public void gameLoop(Player p1, Player p2){
-		while(p1.isTurn == true) {
-			System.out.println("Player" + p1.getPlayerNumber()+ "is playing...");
-			
+	public void gameLoop(Player p1, Player p2) {
+		while(this.isGameRunning()) {
+			System.out.println("Player " + p1.getPlayerNumber()+ "is playing...");
+			this.setGameRunning(false);
 		}
 	}
+
+
+	public boolean isGameRunning() {
+		return this.gameRunning;
+	}
+
+
+	public void setGameRunning(boolean gameRunning) {
+		this.gameRunning = gameRunning;
+	}
+
+
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
+	}
+
+
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
 	
+	public Tile[][] placeBoats(Boat[] ships) 
+	{
+		GridCreator creator = new GridCreator(ships, 10, frame);
+		creator.setup();
+		frame.getContentPane().add(creator);
+		frame.getContentPane().repaint();
+		frame.setVisible(true);
+		while (!creator.isSetupOver()) {}
+		frame.getContentPane().removeAll();
+		frame.getContentPane().revalidate();
+		frame.getContentPane().repaint();
+		
+		return creator.getTileMatrix();
+	}
+	
+	public Boat[] initBoats()
+	{
+		Boat[] boats = new Boat[carrierAmount + battleshipAmount + cruiserAmount + submarineAmount + destroyerAmount];
+		for (int i = 0; i < boats.length; i++)
+		{
+			boats[i] = new Boat("Carrier");
+		}
+		return boats;
+	}
 }
