@@ -51,8 +51,18 @@ public class SmallGrid extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		// draws the grid image
 		g2.drawImage(gridImage, 0, 15, this);
-
 		
+		// loops through the array
+		/*
+		for (int i = 0; i < this.getTileMatrix().length; i++) {
+			for (int j = 0; j < this.getTileMatrix()[i].length; j++) {
+				// if there is a ship piece at the location
+				if (this.getTileMatrix()[i][j].isSeaOrBoat() == 1) {
+					// draw the image of the ship piece at the proper grid location
+					// TODO check if boat part has been hit or not
+				}
+			}
+		}*/
 	}
 
 

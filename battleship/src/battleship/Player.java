@@ -83,4 +83,9 @@ public class Player {
 		return true;
 	}
 	
+	public void placeBoats()
+	{
+		
+	}
+	
 }

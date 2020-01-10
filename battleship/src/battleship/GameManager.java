@@ -41,9 +41,10 @@ public class GameManager {
 		
 		// Create 2 players
 		
-		// Instanciate ships
-		
-		// Instanciate grids
+		// Instantiate ships
+		//p1.placeBoats();
+		//p2.placeBoats();
+		// Instantiate grids
 		Grid grid = new Grid(gridSize);
 		SmallGrid smallGrid = new SmallGrid(gridSize);
 		smallGrid.setLocation(grid.getWidth()+10, grid.getY());
@@ -58,7 +59,5 @@ public class GameManager {
 		frame.addMouseListener(grid);
 		frame.setVisible(true);
 	}
-	
-	
 	
 }
