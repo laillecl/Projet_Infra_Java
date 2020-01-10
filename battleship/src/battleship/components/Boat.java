@@ -101,5 +101,17 @@ public class Boat {
 		}
 	}
 	
+	// Check if a boat part is on the Tile
+	public boolean tileBelongsToBoat(Tile tile)
+	{
+		for(int i = 0; i < this.getShipParts().length; i++) {
+			if(tile.getPositionX() == this.getShipParts()[i].getPositionX() && tile.getPositionY() == this.getShipParts()[i].getPositionY())
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 }

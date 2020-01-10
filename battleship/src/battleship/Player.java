@@ -13,6 +13,7 @@ public class Player {
 	
 	public boolean playerWon = false;
 	
+	
 	public Player(int playerNumber, boolean isTurn)
 	{
 		this.setPlayerNumber(playerNumber);
@@ -81,6 +82,11 @@ public class Player {
 			}
 		}
 		return true;
+	}
+	
+	public void placeBoats()
+	{
+		
 	}
 	
 }

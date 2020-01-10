@@ -16,6 +16,7 @@ public class Tile {
 	public int positionY;
 	public Color tileColor;
 	public boolean isClicked;
+	public int seaOrBoat;
 	
 	//constructors 	
 	public Tile(int X, int Y, Color color){
@@ -67,6 +68,25 @@ public class Tile {
 		this.tileColor = tileColor;
 	}
 	
+	public boolean isClicked() {
+		return isClicked;
+	}
+
+
+	public void setClicked(boolean isClicked) {
+		this.isClicked = isClicked;
+	}
+
+
+	public int isSeaOrBoat() {
+		return this.seaOrBoat;
+	}
+
+
+	public void setSeaOrBoat(int seaOrBoat) {
+		this.seaOrBoat = seaOrBoat;
+	}
+	
 	
 	// Methods
 	
@@ -76,5 +96,7 @@ public class Tile {
 		name += y+1;
 		this.setTileName(name);
 	}
+	
+	
 		
 }
