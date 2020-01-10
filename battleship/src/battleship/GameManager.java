@@ -19,6 +19,7 @@ public class GameManager {
 	public static int submarineAmount = 1;
 	public static int destroyerAmount = 1;
 	
+	
 	// Frame instance
 	private JFrame frame;
 	
@@ -36,10 +37,6 @@ public class GameManager {
 		frame.pack();
 	}
 	
-	// loop method for game turns 
-	public void gameLoop() {
-		
-	}
 	
 	public void startGame()
 	{
@@ -68,7 +65,14 @@ public class GameManager {
 		frame.setVisible(true);
 		
 		//instanciate turn 
-		gameLoop();
+	}
+	
+	// loop method for game turns 
+	public void gameLoop(Player p1, Player p2){
+		while(p1.isTurn == true) {
+			System.out.println("Player" + p1.getPlayerNumber()+ "is playing...");
+			
+		}
 	}
 	
 	
