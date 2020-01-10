@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import battleship.ihm.Grid;
 import battleship.ihm.SmallGrid;
+import battleship.Player;
 
 public class GameManager {
 	
@@ -35,11 +36,19 @@ public class GameManager {
 		frame.pack();
 	}
 	
+	// loop method for game turns 
+	public void gameLoop() {
+		
+	}
+	
 	public void startGame()
 	{
 		this.setUpWindow();
 		
 		// Create 2 players
+		Player p1 = new Player(1);
+		p1.setTurn(true);
+		Player p2 = new Player(2);
 		
 		// Instantiate ships
 		//p1.placeBoats();
@@ -58,6 +67,9 @@ public class GameManager {
 		frame.getContentPane().add(smallGrid);
 		frame.addMouseListener(grid);
 		frame.setVisible(true);
+		
+		//instanciate turn 
+		gameLoop();
 	}
 	
 }
