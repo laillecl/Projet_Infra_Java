@@ -18,18 +18,11 @@ catch(Exception $e)
 	while ($donnees = $reponse->fetch())
 	{
 		//On regarde si les login et mots de passe sont bons
-		if ($donnees['user_name'] == $_POST['login'] and $donnees['password'] == $_POST['motdepasse']){
+		if ($donnees['user_name'] == $_POST['login'] and password_verify($_POST['motdepasse'], $donnees['password'])){
 
 			// L'utilisateur est connu et peut accéder à l'application des jeux
-			//TODO - Lancer l'application des jeux sur le serveur
-			//echo exec('java -classpath testappli.jar LanceurJeux.Menu ', $output);
+
 			echo 'ok l utilisateur est connu';
-			?>
-
-
-
-			<?php
-
 			$marqueur = 1;
 
 		}
