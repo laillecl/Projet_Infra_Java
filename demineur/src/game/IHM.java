@@ -3,17 +3,20 @@ package game;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import components.Grille;
 
-public class IHM extends JFrame{
+public class IHM extends JFrame implements ActionListener{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	boolean def = false;
+	boolean res = false;
+	boolean gabriel = false;
 
 	public IHM() {
 		this.setTitle("Demineur");
@@ -30,32 +33,35 @@ public class IHM extends JFrame{
 		this.add(flag);
 		
 		Button reset = new Button("reset");
-		reset.setEnabled(false);
+		reset.setEnabled(true);
+		reset.addActionListener(this);
 		this.add(reset);
-		
 		this.setVisible(true);
 		
-		boolean fin = grille.getDefaite();
-		if (fin) {
-			this.setDef(true);
+		if (flag.isSelected()){
+			System.out.println("AaaaAAAs");
+			if(grille.getDrapo() == false) {
+				grille.setDrapo(true);
+			}
+			else {
+				grille.setDrapo(false);
+			}
+		    
+		}   
+		
+		if (res = true) {
+			grille.reset();
+			res = false;
 		}
 		
-		
-		
 	}
 	
-	private void setDef(boolean b) {
-		this.def = b;
-		
+	public void itemStateChanged() {
+		System.out.println("La");
 	}
 
-	public boolean getDef() {
-		return this.def;
+	public void actionPerformed(ActionEvent e) {
+		res = true;
+		System.out.println(res);
 	}
-
-	public void checkVictoryStatus() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }
