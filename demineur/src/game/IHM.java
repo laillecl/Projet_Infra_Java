@@ -28,29 +28,11 @@ public class IHM extends JFrame{
 		
 		JRadioButton flag = new JRadioButton("flag");
 		this.add(flag);
+//		flag.addActionListener(this);
 		
 		Button reset = new Button("reset");
 		reset.setEnabled(false);
 		this.add(reset);
-		
-		this.setVisible(true);
-		
-		boolean fin = grille.getDefaite();
-		if (fin) {
-			this.setDef(true);
-		}
-		
-		
-		
-	}
-	
-	public void setDef(boolean b) {
-		this.def = b;
-		
-	}
-
-	public static boolean getDef() {
-		return def;
 	}
 
 	public void checkVictoryStatus() {

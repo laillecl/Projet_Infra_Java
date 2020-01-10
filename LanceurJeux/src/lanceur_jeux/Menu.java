@@ -1,6 +1,7 @@
 package lanceur_jeux;
 
 import java.awt.BorderLayout;
+import java.sql.*;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Font;
@@ -58,7 +59,6 @@ public class Menu extends JFrame {
 	
 	public void linkButton(JButton bouton) {
 		bouton.addActionListener(new ActionListener() { 
-			
 		    public void actionPerformed(ActionEvent e) { 
 		    	//TODO - Pour lancer d'autres application, modifier le chemin ci-dessous
 		        File file = new File("D:\\Anne-Camille\\Documents\\I2\\Logiciels Et Donnes\\test_demineur.jar");		        
@@ -80,9 +80,22 @@ public class Menu extends JFrame {
 	    label.setFont(new Font("Serif Bold", Font.BOLD, 30));
 	    panel.add(label);
 	}
-
-
+	
 	public static void main(String[] args) {  
 	     new Menu();
-	}  
+	     try{  
+	    	 Class.forName("com.mysql.jdbc.Driver");  
+	    	 Connection con=DriverManager.getConnection(  
+	    	 "jdbc:mysql://http://localhost/phpmyadmin/db_structure.php?db=projet_infra","root","");  
+	    	 //here sonoo is database name, root is username and password  
+	    	 Statement stmt=con.createStatement();  
+	    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
+	    	 while(rs.next())  
+	    	 System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));  
+	    	 con.close();  
+	    	 }catch(Exception e){ System.out.println(e);
+	    	 }  
+	    	 }  
+
+	
 }  
