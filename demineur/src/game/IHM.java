@@ -3,10 +3,12 @@ package game;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import components.Grille;
 
-public class IHM extends JFrame{
+public class IHM extends JFrame implements ActionListener{
 
 	/**
 	 * 
@@ -28,16 +30,17 @@ public class IHM extends JFrame{
 		
 		JRadioButton flag = new JRadioButton("flag");
 		this.add(flag);
-//		flag.addActionListener(this);
+		flag.addActionListener(this);
+		flag.setVisible(true);
 		
 		Button reset = new Button("reset");
 		reset.setEnabled(false);
 		this.add(reset);
 	}
-
-	public void checkVictoryStatus() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	   public  void    actionPerformed(ActionEvent e){
+	        //quand on a cliqué sur le bouton ici
+	        System.out.println("Ici !");
+	    }
 	
 }
