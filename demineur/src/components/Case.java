@@ -11,7 +11,6 @@ public class Case {
 	public int positionX;
 	public int positionY;
 	public boolean isClicked;
-	public boolean isFlaged;
 	public int tileType;	// 0 si case normale, 1 si case vide, 2 si bombe
 	
 	
@@ -54,10 +53,6 @@ public class Case {
 		return this.isClicked;
 	}
 	
-	public boolean getIsFlaged() {
-		return this.isFlaged;
-	}
-	
 	//setters
 	public void setPositionX(int position) {
 		this.positionX = position;
@@ -72,9 +67,5 @@ public class Case {
 	
 	public void setIsClicked(boolean isClicked) {
 		this.isClicked = isClicked;
-	}
-	
-	public void setIsFlaged(boolean drapo) {
-		this.isFlaged = drapo;
 	}
 }

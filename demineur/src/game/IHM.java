@@ -3,20 +3,17 @@ package game;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import java.awt.Button;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import components.Grille;
 
-public class IHM extends JFrame implements ActionListener{
+public class IHM extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	boolean res = false;
-	boolean gabriel = false;
+	boolean def = false;
 
 	public IHM() {
 		this.setTitle("Demineur");
@@ -31,37 +28,64 @@ public class IHM extends JFrame implements ActionListener{
 		
 		JRadioButton flag = new JRadioButton("flag");
 		this.add(flag);
+		flag.addActionListener(this);
 		
 		Button reset = new Button("reset");
-		reset.setEnabled(true);
-		reset.addActionListener(this);
+		reset.setEnabled(false);
 		this.add(reset);
+		
+<<<<<<< HEAD
+//		if (flag.isSelected()){
+//			System.out.println("AaaaAAAs");
+//			if(grille.getDrapo() == false) {
+//				grille.setDrapo(true);
+//			}
+//			else {
+//				grille.setDrapo(false);
+//			}
+//		    
+//		}   
+//		
+//		if (res = true) {
+//			grille.reset();
+//			res = false;
+//		}
+=======
 		this.setVisible(true);
 		
-		if (flag.isSelected()){
-			System.out.println("AaaaAAAs");
-			if(grille.getDrapo() == false) {
-				grille.setDrapo(true);
-			}
-			else {
-				grille.setDrapo(false);
-			}
-		    
-		}   
-		
-		if (res = true) {
-			grille.reset();
-			res = false;
+		boolean fin = grille.getDefaite();
+		if (fin) {
+			this.setDef(true);
 		}
+>>>>>>> parent of 93960df... test Flag
+		
+		
+		
+	}
+<<<<<<< HEAD
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == flag) {
+			
+			
+		}
+		res = true;
+		System.out.println(res);
+=======
+	
+	private void setDef(boolean b) {
+		this.def = b;
+		
+	}
+
+	public boolean getDef() {
+		return this.def;
+>>>>>>> parent of 93960df... test Flag
+	}
+
+	public void checkVictoryStatus() {
+		// TODO Auto-generated method stub
 		
 	}
 	
-	public void itemStateChanged() {
-		System.out.println("La");
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		res = true;
-		System.out.println(res);
-	}
 }
