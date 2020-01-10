@@ -1,15 +1,12 @@
 package battleship.components;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 public class Tile {
 
 	//constants
 	public static final int DEFAULT_POSITION_X = 0;
 	public static final int DEFAULT_POSITION_Y = 0;
-	public static final int DEFAULT_CELL_SIZE = 47;
 	//Colors : blue for water (default), black for a boat's part.
 	public static final Color DEFAULT_COLOR = new Color(0, 0, 255);
 
@@ -19,47 +16,34 @@ public class Tile {
 	public int positionY;
 	public Color tileColor;
 	public boolean isClicked;
-	public int size;
 	
 	//constructors 	
-	public Tile(String name, int X, int Y, int size, Color color){
-		this.tileName = name;
-		this.size = size;
-		this.positionX = X;
-		this.positionY = Y;	
-		this.tileColor = color;
+	public Tile(int X, int Y, Color color){
+		this.setPositionX(X);
+		this.setPositionY(Y);
+		this.setTileColor(color);
+		this.generateTileName(X, Y);
 	}
 	
-	public Tile(String name, int X, int Y, int size){
-		this.tileName = name;
-		this.size = size;
-		this.positionX = X;
-		this.positionY = Y;	
-		this.tileColor = DEFAULT_COLOR;
+
+	public Tile(int X, int Y){
+		this(X, Y, DEFAULT_COLOR);
 	}
 	
-	public Tile(String name) {
-		this.tileName = name;
-		this.size = DEFAULT_CELL_SIZE;
-		this.positionX = DEFAULT_POSITION_X;
-		this.positionY = DEFAULT_POSITION_Y;
-		this.tileColor = DEFAULT_COLOR;
+	public Tile() {
+		this(DEFAULT_POSITION_X, DEFAULT_POSITION_Y, DEFAULT_COLOR);
 	}
 	
 	
 	
-	//getters
+	//getters && setters
 	public int getPositionX() {
 		return this.positionX;
 	}
 	public int getPositionY() {
 		return this.positionY;
 	}
-	public Color getColor() {
-		return this.tileColor;
-	}
 	
-	//setters
 	public void setPositionX(int position) {
 		this.positionX = position;
 	}
@@ -67,8 +51,30 @@ public class Tile {
 		this.positionY = position;
 	}
 
-	public void setColor(Color color) {
-		this.tileColor = color;
+	public String getTileName() {
+		return this.tileName;
+	}
+
+	public void setTileName(String tileName) {
+		this.tileName = tileName;
+	}
+
+	public Color getTileColor() {
+		return this.tileColor;
+	}
+
+	public void setTileColor(Color tileColor) {
+		this.tileColor = tileColor;
+	}
+	
+	
+	// Methods
+	
+	private void generateTileName(int x, int y) {
+		String name = "";
+		name = String.valueOf((char)(x + 65));
+		name += y+1;
+		this.setTileName(name);
 	}
 		
 }
