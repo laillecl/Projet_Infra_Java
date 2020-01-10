@@ -13,7 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import battleship.components.Tile;
+import battleship.components.*;
 
 public class Grid extends JPanel implements MouseListener {
 
@@ -93,7 +93,7 @@ public class Grid extends JPanel implements MouseListener {
 				
 				System.out.println(this.getTileMatrix()[X][Y].getTileName());
 				this.getTileMatrix()[X][Y].setClicked(true);
-				//check if a boat has been hit
+			
 				repaint();
 			
 			}
@@ -149,7 +149,7 @@ public class Grid extends JPanel implements MouseListener {
 						g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
 								TILE_SIZE, TILE_SIZE);
 					} else {
-						//dessiner bateau touché ou coulé
+						//dessiner bateau touchï¿½ ou coulï¿½
 					}
 				}
 			}

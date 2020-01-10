@@ -25,7 +25,6 @@ public class Tile {
 		this.setTileColor(color);
 		this.generateTileName(X, Y);
 	}
-	
 
 	public Tile(int X, int Y){
 		this(X, Y, DEFAULT_COLOR);
@@ -34,7 +33,6 @@ public class Tile {
 	public Tile() {
 		this(DEFAULT_POSITION_X, DEFAULT_POSITION_Y, DEFAULT_COLOR);
 	}
-	
 	
 	
 	//getters && setters
@@ -95,8 +93,5 @@ public class Tile {
 		name = String.valueOf((char)(x + 65));
 		name += y+1;
 		this.setTileName(name);
-	}
-	
-	
-		
+	}	
 }

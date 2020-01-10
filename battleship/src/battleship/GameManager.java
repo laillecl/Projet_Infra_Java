@@ -2,6 +2,8 @@ package battleship;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JFrame;
 
 import battleship.ihm.Grid;
@@ -69,9 +71,10 @@ public class GameManager {
 	}
 	
 	// loop method for game turns 
-	public void gameLoop(Player p1, Player p2){
+	public void gameLoop(Player p1, Player p2, MouseEvent e){
 		while(p1.isTurn == true) {
 			System.out.println("Player" + p1.getPlayerNumber()+ "is playing...");
+			
 			
 		}
 	}

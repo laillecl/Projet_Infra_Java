@@ -1,5 +1,7 @@
 package battleship.components;
 
+import java.awt.event.MouseEvent;
+
 public class Boat {
 	
 	public static final int CARRIER_LENGTH = 5;
@@ -105,13 +107,17 @@ public class Boat {
 	public boolean tileBelongsToBoat(Tile tile)
 	{
 		for(int i = 0; i < this.getShipParts().length; i++) {
-			if(tile.getPositionX() == this.getShipParts()[i].getPositionX() && tile.getPositionY() == this.getShipParts()[i].getPositionY())
+			if(tile.getPositionX() == this.getShipParts()[i].getPositionX() 
+					&& tile.getPositionY() == this.getShipParts()[i].getPositionY())
 			{
+				if(this.getHealth()>1) {
+					this.takeDamage();
+				}else {
+					this.setShipSunk(true);
+				}
 				return true;
 			}
 		}
-		
 		return false;
 	}
-	
 }
