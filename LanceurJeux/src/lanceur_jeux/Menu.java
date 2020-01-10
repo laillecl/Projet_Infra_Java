@@ -84,18 +84,18 @@ public class Menu extends JFrame {
 	public static void main(String[] args) {  
 	     new Menu();
 	     try{  
-	    	 Class.forName("com.mysql.jdbc.Driver");  
+	    	 Class.forName("com.mysql.cj.jdbc.Driver");  
 	    	 Connection con=DriverManager.getConnection(  
-	    	 "jdbc:mysql://http://localhost/phpmyadmin/db_structure.php?db=projet_infra","root","");  
-	    	 //here sonoo is database name, root is username and password  
+	    	 "jdbc:mysql://localhost:3306/projet_infra","root","");  
 	    	 Statement stmt=con.createStatement();  
 	    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
 	    	 while(rs.next())  
 	    	 System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));  
 	    	 con.close();  
-	    	 }catch(Exception e){ System.out.println(e);
-	    	 }  
-	    	 }  
+	     }
+	     catch(Exception e){ 
+	    	 System.out.println(e);
+	    }  
+	}  
 
-	
 }  

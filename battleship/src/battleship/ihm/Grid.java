@@ -92,6 +92,9 @@ public class Grid extends JPanel implements MouseListener {
 				System.out.println("Un clic en " + this.getMouseX() + " et " + this.getMouseY() + " Les coordonnees sont " + this.getxMat() + " et " + this.getyMat());
 				
 				System.out.println(this.getTileMatrix()[X][Y].getTileName());
+				this.getTileMatrix()[X][Y].setClicked(true);
+				//check if a boat has been hit
+				repaint();
 			
 			}
 		}
@@ -131,11 +134,24 @@ public class Grid extends JPanel implements MouseListener {
 		// loops through all spots in the grid
 		for (int i = 0; i < this.getTileMatrix().length; i++) {
 			for (int j = 0; j < this.getTileMatrix()[i].length; j++) {
-				
-				g2.setColor(Color.gray);
-				g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
-						TILE_SIZE, TILE_SIZE);
-				
+				// check if the Tile has not been clicked yet
+				if (! this.getTileMatrix()[i][j].isClicked)
+				{
+					g2.setColor(Color.gray);
+					g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
+							TILE_SIZE, TILE_SIZE);
+				} else
+				{
+					// else check if there is a boat part or sea
+					if (this.getTileMatrix()[i][j].isSeaOrBoat() == 0)
+					{
+						g2.setColor(Color.blue);
+						g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
+								TILE_SIZE, TILE_SIZE);
+					} else {
+						//dessiner bateau touché ou coulé
+					}
+				}
 			}
 		}
 	}

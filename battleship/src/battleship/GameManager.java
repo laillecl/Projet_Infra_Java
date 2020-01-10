@@ -47,9 +47,10 @@ public class GameManager {
 		p1.setTurn(true);
 		Player p2 = new Player(2);
 		
-		// Instanciate ships
-		
-		// Instanciate grids
+		// Instantiate ships
+		//p1.placeBoats();
+		//p2.placeBoats();
+		// Instantiate grids
 		Grid grid = new Grid(gridSize);
 		SmallGrid smallGrid = new SmallGrid(gridSize);
 		smallGrid.setLocation(grid.getWidth()+10, grid.getY());
@@ -74,7 +75,5 @@ public class GameManager {
 			
 		}
 	}
-	
-	
 	
 }

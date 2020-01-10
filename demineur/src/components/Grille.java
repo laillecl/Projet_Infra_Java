@@ -1,18 +1,13 @@
 package components;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Grille extends JPanel implements MouseListener{
@@ -29,7 +24,6 @@ public class Grille extends JPanel implements MouseListener{
 	public int yMat;
 	public boolean defaite = false;
 	public boolean victoire = false;
-	private BufferedImage image;
 	
 	public static final int GRID_SIZE = 15;
 	public static final int X_ORIGIN = 20; // X coordinate of the top left
@@ -77,7 +71,7 @@ public class Grille extends JPanel implements MouseListener{
 				}
 				else {
 					this.matrice[i][j] = new Case(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1));
-					if (rand.nextInt(100) <10) {
+					if (rand.nextInt(100) <3) {
 						this.matrice[i][j].setTileType(2);
 					}
 				}
@@ -161,31 +155,6 @@ public class Grille extends JPanel implements MouseListener{
 //				devoileCaseAdjBas(i,j);
 				
 				// pour debug
-				
-//				if(this.matrice[i-1][j-1].getTileType() != 1){
-//					devoileCaseAdjacente(i-1,j-1);
-//				}
-//				if(this.matrice[i-1][j].getTileType() != 1){
-//					devoileCaseAdjacente(i-1,j);
-//				}
-//				if(this.matrice[i-1][j+1].getTileType() != 1){
-//					devoileCaseAdjacente(i-1,j+1);
-//				}
-//				if(this.matrice[i][j-1].getTileType() != 1){
-//					devoileCaseAdjacente(i,j-1);
-//				}
-//				if(this.matrice[i][j+1].getTileType() != 1){
-//					devoileCaseAdjacente(i,j+1);
-//				}
-//				if(this.matrice[i+1][j-1].getTileType() != 1){
-//					devoileCaseAdjacente(i+1,j-1);
-//				}
-//				if(this.matrice[i+1][j].getTileType() != 1){
-//					devoileCaseAdjacente(i+1,j);
-//				}
-//				if(this.matrice[i+1][j+1].getTileType() != 1){
-//					devoileCaseAdjacente(i+1,j+1);
-//				}
 		}
 	}
 	
@@ -241,9 +210,37 @@ public class Grille extends JPanel implements MouseListener{
 		}
 	}
 	
+	public int compterBombes() {
+		int killian = 0;
+		for (int i = 0; i < this.size; i++) {
+			for (int j = 0; j < this.size; j++) {
+				if(this.getCase(i, j).getTileType() == 2) {
+					killian++;
+				}
+			}
+		}
+		return killian;
+	}
+	
+	public int compterCasesRestantes() {
+		int gabriel = 0;
+		for (int i = 0; i < this.size; i++) {
+			for (int j = 0; j < this.size; j++) {
+				if(this.getCase(i, j).getTileType() == 0) {
+					if(this.getCase(i, j).getIsClicked() == true) {
+						gabriel++;
+					}
+				}
+			}
+		}
+		return gabriel;
+	}
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		
+		Font myFont = new Font("Arial", Font.BOLD, 12);
 		
 		for (int i = 0; i < this.size; i++) {
 			for (int j = 0; j < this.size; j++) {
@@ -297,16 +294,37 @@ public class Grille extends JPanel implements MouseListener{
 						}
 					}
 					
+					// condition defaite
 					if(defaite == true) {
 						this.getCase(i,	j).setIsClicked(true);
+						Font font2 = new Font("Arial", Font.BOLD, 24);
+						g2.setColor(Color.red);
+						g2.setFont(font2);
+						g2.drawString("DEFAITE", X_ORIGIN, Y_ORIGIN );
+						g2.setFont(myFont);
+					}
+					
+					// condition victoire
+					if(victoire == true) {
+						if (defaite == false){
+							this.getCase(i,	j).setIsClicked(true);
+							Font font2 = new Font("Arial", Font.BOLD, 24);
+							g2.setColor(Color.green);
+							g2.setFont(font2);
+							g2.drawString("VICTOIRE", X_ORIGIN, Y_ORIGIN );
+							g2.setFont(myFont);
+						}
 					}
 					
 					// Si une bombe est cliquée, fin de partie
 					if(this.getCase(i, j).getTileType() == 2) {
 						if (this.getCase(i, j).getIsClicked()) {
-							defaite = true;
-							
+							this.defaite = true;
 						}
+					}
+					
+					if(((this.size-2)*(this.size-2) - this.compterBombes()) == this.compterCasesRestantes()){
+						this.victoire = true;
 					}
 					
 				}
@@ -322,8 +340,9 @@ public class Grille extends JPanel implements MouseListener{
 		xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
 		yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
 		System.out.println("Un clic en " + mouseX + " et " + mouseY + " Les coordonnees sont " + xMat + " et " + yMat);
-		System.out.println("Les bombes adjactentes sont : " + caseAdjacenteBombe(xMat,yMat));
-		System.out.println("Cette case est ajdacente au vide : " + caseAdjacenteVide(xMat,yMat));
+		System.out.println("Les cases devoilees : " + ((this.size-2)*(this.size-2) - this.compterBombes()));
+		System.out.println("Les cases restantes : " + this.victoire);
+		
 	}
 
 	@Override
