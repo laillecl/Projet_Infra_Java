@@ -27,17 +27,21 @@ public class Grid extends JPanel implements MouseListener {
 	private BufferedImage gridImage;
 	
 	public static final int GRID_SIZE = 10;
-	public static final int X_ORIGIN = 54; // X coordinate of the top left
-	public static final int Y_ORIGIN = 56; // Y coordinate of the top left
-	public static final int TILE_SIZE = 47; // Size of the tile spaces
+	public static final int X_ORIGIN = 50; // X coordinate of the top left
+	public static final int Y_ORIGIN = 52; // Y coordinate of the top left
+	public static final int TILE_SIZE = 48; // Size of the tile spaces
 	public static final int BORDER_SIZE = 5; // size of the border between spaces
 	
+	public int mouseX;
+	public int mouseY;
+	public int xMat;
+	public int yMat;
 	
 	public Grid()
 	{
 		this(new Tile[GRID_SIZE][GRID_SIZE], "gridLabels.png");
 	}
-
+ 
 	public Grid(int size)
 	{
 		this(new Tile[size][size], "gridLabels.png");
@@ -46,9 +50,9 @@ public class Grid extends JPanel implements MouseListener {
 	public Grid(Tile[][] tileMatrix, String path)
 	{
 		this.setTileMatrix(tileMatrix);
-		this.setBackground(Color.white);
-		this.setPreferredSize(new Dimension((X_ORIGIN+ this.getTileMatrix().length + 1 + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)), 
-				Y_ORIGIN+ this.getTileMatrix().length + 1 + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)));
+		this.setBackground(Color.red);
+		this.setPreferredSize(new Dimension((X_ORIGIN + BORDER_SIZE + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)), 
+				Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)));
 		this.setSize(getPreferredSize());
 		this.setLocation(0,0);
 		
@@ -57,12 +61,40 @@ public class Grid extends JPanel implements MouseListener {
 		} catch (IOException e) {
 			System.out.println("Failed to load image");
 		}
+		
+		this.constructMatrix();
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		// left click
+		if (e.getButton() == MouseEvent.BUTTON1) {
+			this.setMouseX(e.getX());
+			this.setMouseY(e.getY() - (TILE_SIZE/2));
+			int X = 0;
+			while (X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * X) + BORDER_SIZE < this.getMouseX()) {
+				X++;
+			}
+			X--;
+
+			// turns the y coordinate of the mouse into a y coordinate in the
+			// grid array using MATH
+			int Y = 0;
+			while (Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * Y) + BORDER_SIZE < this.getMouseY()) {
+				Y++;
+			}
+			Y--;
+			if (X > GRID_SIZE-1 || Y > GRID_SIZE-1) {
+				System.out.println("Clicked outside the window");
+			} else {
+				this.setxMat(X);
+				this.setyMat(Y);
+				System.out.println("Un clic en " + this.getMouseX() + " et " + this.getMouseY() + " Les coordonnees sont " + this.getxMat() + " et " + this.getyMat());
+				
+				System.out.println(this.getTileMatrix()[X][Y].getTileName());
+			
+			}
+		}
 	}
 
 	@Override
@@ -101,8 +133,8 @@ public class Grid extends JPanel implements MouseListener {
 			for (int j = 0; j < this.getTileMatrix()[i].length; j++) {
 				
 				g2.setColor(Color.gray);
-				g2.fillRect(X_ORIGIN + i + 1 + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + j + 1 + ((TILE_SIZE + BORDER_SIZE) * j),
-						TILE_SIZE+(BORDER_SIZE/2)-1, TILE_SIZE+(BORDER_SIZE/2)-1);
+				g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
+						TILE_SIZE, TILE_SIZE);
 				
 			}
 		}
@@ -114,6 +146,46 @@ public class Grid extends JPanel implements MouseListener {
 
 	public void setTileMatrix(Tile[][] tileMatrix) {
 		this.tileMatrix = tileMatrix;
+	}
+
+	public int getxMat() {
+		return this.xMat;
+	}
+
+	public void setxMat(int xMat) {
+		this.xMat = xMat;
+	}
+
+	public int getyMat() {
+		return this.yMat;
+	}
+
+	public void setyMat(int yMat) {
+		this.yMat = yMat;
+	}
+
+	public int getMouseX() {
+		return this.mouseX;
+	}
+
+	public void setMouseX(int mouseX) {
+		this.mouseX = mouseX;
+	}
+
+	public int getMouseY() {
+		return this.mouseY;
+	}
+
+	public void setMouseY(int mouseY) {
+		this.mouseY = mouseY;
+	}
+	
+	public void constructMatrix(){
+		for (int i = 0; i < this.getTileMatrix().length; i++) {
+			for (int j = 0; j < this.getTileMatrix().length; j++) {
+				this.getTileMatrix()[i][j] = new Tile(i, j);
+			}
+		}
 	}
 	
 	

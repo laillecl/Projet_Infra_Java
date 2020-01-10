@@ -17,43 +17,33 @@ public class Tile {
 	public Color tileColor;
 	public boolean isClicked;
 	
-	
 	//constructors 	
-	public Tile(String name, int X, int Y, Color color){
-		this.tileName = name;
-		this.positionX = X;
-		this.positionY = Y;	
-		this.tileColor = color;
+	public Tile(int X, int Y, Color color){
+		this.setPositionX(X);
+		this.setPositionY(Y);
+		this.setTileColor(color);
+		this.generateTileName(X, Y);
 	}
 	
-	public Tile(String name, int X, int Y){
-		this.tileName = name;
-		this.positionX = X;
-		this.positionY = Y;	
-		this.tileColor = DEFAULT_COLOR;
+
+	public Tile(int X, int Y){
+		this(X, Y, DEFAULT_COLOR);
 	}
 	
-	public Tile(String name) {
-		this.tileName = name;
-		this.positionX = DEFAULT_POSITION_X;
-		this.positionY = DEFAULT_POSITION_Y;
-		this.tileColor = DEFAULT_COLOR;
+	public Tile() {
+		this(DEFAULT_POSITION_X, DEFAULT_POSITION_Y, DEFAULT_COLOR);
 	}
 	
 	
 	
-	//getters
+	//getters && setters
 	public int getPositionX() {
 		return this.positionX;
 	}
 	public int getPositionY() {
 		return this.positionY;
 	}
-	public Color getColor() {
-		return this.tileColor;
-	}
 	
-	//setters
 	public void setPositionX(int position) {
 		this.positionX = position;
 	}
@@ -61,7 +51,30 @@ public class Tile {
 		this.positionY = position;
 	}
 
-	public void setColor(Color color) {
-		this.tileColor = color;
+	public String getTileName() {
+		return this.tileName;
 	}
+
+	public void setTileName(String tileName) {
+		this.tileName = tileName;
+	}
+
+	public Color getTileColor() {
+		return this.tileColor;
+	}
+
+	public void setTileColor(Color tileColor) {
+		this.tileColor = tileColor;
+	}
+	
+	
+	// Methods
+	
+	private void generateTileName(int x, int y) {
+		String name = "";
+		name = String.valueOf((char)(x + 65));
+		name += y+1;
+		this.setTileName(name);
+	}
+		
 }
