@@ -24,6 +24,7 @@ public class Grille extends JPanel implements MouseListener{
 	public int yMat;
 	public boolean defaite = false;
 	public boolean victoire = false;
+	public boolean flag = false;
 	
 	public static final int GRID_SIZE = 15;
 	public static final int X_ORIGIN = 20; // X coordinate of the top left
@@ -58,6 +59,30 @@ public class Grille extends JPanel implements MouseListener{
 		this.defaite = rejouer;
 	}
 	
+	public boolean getVictoire() {
+		return this.victoire;
+	}
+	
+	public void setVictoire(boolean vic) {
+		this.victoire = vic;
+	}
+	
+	public boolean getFlag() {
+		return this.flag;
+	}
+	
+	public void setFlag(boolean annek) {
+		this.flag = annek;
+	}
+	
+	public void resetMatrice() {
+		for (int i = 0; i < this.size; i++) {
+			for (int j = 0; j < this.size; j++) {
+				this.matrice[i][j] = null;
+			}
+		}
+	}
+	
 	public void construireMatrice(){
 		// placement aleatoire des bombes
 		Random rand = new Random();
@@ -71,7 +96,7 @@ public class Grille extends JPanel implements MouseListener{
 				}
 				else {
 					this.matrice[i][j] = new Case(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1));
-					if (rand.nextInt(100) <3) {
+					if (rand.nextInt(100) <10) {
 						this.matrice[i][j].setTileType(2);
 					}
 				}
@@ -244,6 +269,14 @@ public class Grille extends JPanel implements MouseListener{
 		
 		for (int i = 0; i < this.size; i++) {
 			for (int j = 0; j < this.size; j++) {
+				
+				if(this.getFlag() == true) {
+					if (i == xMat && j == yMat) {
+						this.getCase(i, j).setIsFlagged(true);
+						this.getCase(i, j).setDrapeau(!this.getCase(i, j).getDrapeau());
+					}
+				}
+				
 				if(i == 0 || j == 0) {
 					g2.setColor(this.getBackground());
 					g2.fillRect(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1), TILE_SIZE, TILE_SIZE);
@@ -254,31 +287,36 @@ public class Grille extends JPanel implements MouseListener{
 				}
 				else {
 					g2.setColor(Color.DARK_GRAY);
-					
 					// Est-ce que la case est cliquée ?
 					if (i == xMat && j == yMat) {
-						this.matrice[i][j].setIsClicked(true);
-						devoileCaseAdjacente(i,j);
+						if(this.getCase(i, j).getIsFlagged() == false){
+							this.matrice[i][j].setIsClicked(true);
+							devoileCaseAdjacente(i,j);
+						}
 					}
 					
 					// Si oui on change sa couleur
 					if(this.getCase(i, j).isClicked) {
 						g2.setColor(Color.LIGHT_GRAY);
-						
 						// Si c'est un bombe, icone bombe
 						if(this.getCase(i, j).getTileType() == 2) {
-							g2.setColor(Color.red);
-							// g2.drawImage(image, X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1), this);
+							if(this.getCase(i, j).getIsFlagged() == false){
+								g2.setColor(Color.red);
+							}
 						}
 					}
 					
 					// Sinon on laisse un rectangle gris
-					g2.fillRect(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1), TILE_SIZE, TILE_SIZE);
+					if(this.getCase(i, j).getIsFlagged() == false){
+						g2.fillRect(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1), TILE_SIZE, TILE_SIZE);
+					}
 					
 					if(this.getCase(i, j).getTileType() == 2) {
-						if(this.getCase(i, j).getIsClicked()) {
-							g2.setColor(Color.black);
-							g2.fillOval(X_ORIGIN + i*(TILE_SIZE+1)+(TILE_SIZE)/8, Y_ORIGIN + j*(TILE_SIZE+1)+(TILE_SIZE)/8, (TILE_SIZE)*6/8, (TILE_SIZE)*6/8);
+						if(this.getCase(i, j).getIsFlagged() == false){
+							if(this.getCase(i, j).getIsClicked()) {
+								g2.setColor(Color.black);
+								g2.fillOval(X_ORIGIN + i*(TILE_SIZE+1)+(TILE_SIZE)/8, Y_ORIGIN + j*(TILE_SIZE+1)+(TILE_SIZE)/8, (TILE_SIZE)*6/8, (TILE_SIZE)*6/8);
+							}
 						}
 					}
 					
@@ -288,14 +326,16 @@ public class Grille extends JPanel implements MouseListener{
 					if(cpt != 0) {
 						if(this.getCase(i, j).isClicked) {
 							if(this.getCase(i,j).getTileType() != 2) {
-								g2.setColor(Color.black);
-								g2.drawString(str, X_ORIGIN + i*(TILE_SIZE+1) + TILE_SIZE/2, Y_ORIGIN + j*(TILE_SIZE+1) + TILE_SIZE/2);
+								if(this.getCase(i, j).getIsFlagged() == false){
+									g2.setColor(Color.black);
+									g2.drawString(str, X_ORIGIN + i*(TILE_SIZE+1) + TILE_SIZE/2, Y_ORIGIN + j*(TILE_SIZE+1) + TILE_SIZE/2);
+								}
 							}
 						}
 					}
 					
 					// condition defaite
-					if(defaite == true) {
+					if(this.getDefaite() == true) {
 						this.getCase(i,	j).setIsClicked(true);
 						Font font2 = new Font("Arial", Font.BOLD, 24);
 						g2.setColor(Color.red);
@@ -305,28 +345,42 @@ public class Grille extends JPanel implements MouseListener{
 					}
 					
 					// condition victoire
-					if(victoire == true) {
-						if (defaite == false){
+					if(this.getVictoire() == true) {
 							this.getCase(i,	j).setIsClicked(true);
 							Font font2 = new Font("Arial", Font.BOLD, 24);
 							g2.setColor(Color.green);
 							g2.setFont(font2);
 							g2.drawString("VICTOIRE", X_ORIGIN, Y_ORIGIN );
 							g2.setFont(myFont);
-						}
 					}
 					
 					// Si une bombe est cliquée, fin de partie
 					if(this.getCase(i, j).getTileType() == 2) {
-						if (this.getCase(i, j).getIsClicked()) {
-							this.defaite = true;
+						if (victoire = false) {
+							if (this.getCase(i, j).getIsClicked()) {
+								this.setDefaite(true);
+							}
 						}
 					}
 					
 					if(((this.size-2)*(this.size-2) - this.compterBombes()) == this.compterCasesRestantes()){
-						this.victoire = true;
+						this.setVictoire(true);
 					}
 					
+					if(this.getCase(i, j).getIsFlagged()) {
+						if(this.getCase(i, j).getDrapeau() == false) {
+							g2.setColor(Color.black);
+							g2.drawLine(X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)/2, Y_ORIGIN + j*(TILE_SIZE+1) + (TILE_SIZE)/8, X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)/2, Y_ORIGIN + j*(TILE_SIZE+1) + (TILE_SIZE)*7/8);
+							int xCoords[] = {X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)/2,X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)/2,X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)*7/8};
+							int yCoords[] = {Y_ORIGIN + j*(TILE_SIZE+1) + (TILE_SIZE)*4/8,Y_ORIGIN + j*(TILE_SIZE+1) + (TILE_SIZE)*1/8, Y_ORIGIN + j*(TILE_SIZE+1) + (TILE_SIZE)*2/8};
+							g2.setColor(Color.red);
+							g2.fillPolygon(xCoords, yCoords, 3);
+						}
+						else {
+							g2.setColor(Color.DARK_GRAY);
+							g2.fillRect(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1), TILE_SIZE, TILE_SIZE);
+						}
+					}
 				}
 			}
 		}
@@ -335,20 +389,33 @@ public class Grille extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mouseX = e.getX();
-		mouseY = e.getY();
-		xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
-		yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
-		System.out.println("Un clic en " + mouseX + " et " + mouseY + " Les coordonnees sont " + xMat + " et " + yMat);
-		System.out.println("Les cases devoilees : " + ((this.size-2)*(this.size-2) - this.compterBombes()));
-		System.out.println("Les cases restantes : " + this.victoire);
+		int buttonDown = e.getButton();
+		if (buttonDown == MouseEvent.BUTTON1) {
+			this.setFlag(false);
+			mouseX = e.getX();
+			mouseY = e.getY();
+			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
+			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
+			System.out.println("Un clic en " + mouseX + " et " + mouseY + " Les coordonnees sont " + xMat + " et " + yMat);
+			System.out.println("Les cases devoilees : " + ((this.size-2)*(this.size-2) - this.compterBombes()));
+			System.out.println("Les cases restantes : " + this.compterCasesRestantes());
+			System.out.println("Flag : " + this.getFlag());
+	    }
+		else if(buttonDown == MouseEvent.BUTTON3) {
+			this.setFlag(true);
+			mouseX = e.getX();
+			mouseY = e.getY();
+			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
+			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
+			System.out.println("Flag : " + this.getFlag());
+			System.out.println("La case a un drapeau : " + this.getCase(2, 2).getIsFlagged());
+		}
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

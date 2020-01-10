@@ -1,6 +1,7 @@
 package battleship;
 
 import battleship.components.Boat;
+import battleship.components.Tile;
 
 public class Player {
 	
@@ -83,10 +84,4 @@ public class Player {
 		}
 		return true;
 	}
-	
-	public void placeBoats()
-	{
-		
-	}
-	
 }

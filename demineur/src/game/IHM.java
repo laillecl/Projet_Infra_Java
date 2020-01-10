@@ -14,8 +14,6 @@ public class IHM extends JFrame implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	static boolean def = false;
 
 	public IHM() {
 		this.setTitle("Demineur");
@@ -28,18 +26,12 @@ public class IHM extends JFrame implements ActionListener{
 		this.setContentPane(grille);
 		this.addMouseListener(grille);
 		
-		JRadioButton flag = new JRadioButton("flag");
-		this.add(flag);
-		flag.addActionListener(this);
-		flag.setVisible(true);
-		
 		Button reset = new Button("reset");
-		reset.setEnabled(false);
+		reset.setVisible(true);
 		this.add(reset);
 	}
 	
 	   public  void    actionPerformed(ActionEvent e){
-	        //quand on a cliqué sur le bouton ici
 	        System.out.println("Ici !");
 	    }
 	

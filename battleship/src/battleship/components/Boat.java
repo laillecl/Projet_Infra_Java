@@ -1,6 +1,7 @@
 package battleship.components;
 
 import java.awt.event.MouseEvent;
+import java.awt.Point;
 
 public class Boat {
 	
@@ -12,11 +13,12 @@ public class Boat {
 	
 	private int health;
 	private Tile origin;
+	private Point startingPosition = new Point(0,0);
 	private String orientation;
 	private Tile[] shipParts;
 	private boolean shipSunk;
 	
-	Boat(String name)
+	public Boat(String name)
 	{
 		switch(name)
 		{
@@ -120,4 +122,15 @@ public class Boat {
 		}
 		return false;
 	}
+
+	
+	public Point getStartingOffGridPosition() {
+		return this.startingPosition;
+	}
+	
+	public void setStartingOffGridPosition(Point sp)
+	{
+		this.startingPosition = sp;
+	}
+	
 }

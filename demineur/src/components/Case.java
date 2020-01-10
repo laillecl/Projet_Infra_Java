@@ -12,7 +12,8 @@ public class Case {
 	public int positionY;
 	public boolean isClicked;
 	public int tileType;	// 0 si case normale, 1 si case vide, 2 si bombe
-	
+	public boolean isFlagged;
+	public boolean drapeau = false;
 	
 	//constructors 	
 	public Case(int X, int Y, int type){
@@ -20,6 +21,7 @@ public class Case {
 		this.positionY = Y;	
 		this.tileType = type ;
 		this.isClicked = false;
+		this.isFlagged = false;
 	}
 	
 	public Case(int X, int Y){
@@ -27,6 +29,7 @@ public class Case {
 		this.positionY = Y;	
 		this.tileType = DEFAULT_TILE_TYPE;
 		this.isClicked = false;
+		this.isFlagged = false;
 	}
 	
 	public Case() {
@@ -36,9 +39,6 @@ public class Case {
 		this.isClicked = false;
 	}
 	
-	
-	
-	//getters
 	public int getPositionX() {
 		return this.positionX;
 	}
@@ -53,7 +53,14 @@ public class Case {
 		return this.isClicked;
 	}
 	
-	//setters
+	public boolean getIsFlagged() {
+		return this.isFlagged;
+	}
+	
+	public boolean getDrapeau() {
+		return this.drapeau;
+	}
+	
 	public void setPositionX(int position) {
 		this.positionX = position;
 	}
@@ -68,4 +75,13 @@ public class Case {
 	public void setIsClicked(boolean isClicked) {
 		this.isClicked = isClicked;
 	}
+	
+	public void setIsFlagged(boolean isFlagged) {
+		this.isFlagged = isFlagged;
+	}
+	
+	public void setDrapeau(boolean drapeau) {
+		this.drapeau = drapeau;
+	}
+	
 }
