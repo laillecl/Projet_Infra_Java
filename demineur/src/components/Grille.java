@@ -58,6 +58,14 @@ public class Grille extends JPanel implements MouseListener{
 		this.defaite = rejouer;
 	}
 	
+	public void resetMatrice() {
+		for (int i = 0; i < this.size; i++) {
+			for (int j = 0; j < this.size; j++) {
+				this.matrice[i][j] = null;
+			}
+		}
+	}
+	
 	public void construireMatrice(){
 		// placement aleatoire des bombes
 		Random rand = new Random();
@@ -282,6 +290,8 @@ public class Grille extends JPanel implements MouseListener{
 						}
 					}
 					
+					
+					
 					int cpt = caseAdjacenteBombe(i,j);
 					String str = String.valueOf(cpt);
 					
@@ -306,20 +316,20 @@ public class Grille extends JPanel implements MouseListener{
 					
 					// condition victoire
 					if(victoire == true) {
-						if (defaite == false){
 							this.getCase(i,	j).setIsClicked(true);
 							Font font2 = new Font("Arial", Font.BOLD, 24);
 							g2.setColor(Color.green);
 							g2.setFont(font2);
 							g2.drawString("VICTOIRE", X_ORIGIN, Y_ORIGIN );
 							g2.setFont(myFont);
-						}
 					}
 					
 					// Si une bombe est cliquée, fin de partie
 					if(this.getCase(i, j).getTileType() == 2) {
-						if (this.getCase(i, j).getIsClicked()) {
-							this.defaite = true;
+						if (victoire = false) {
+							if (this.getCase(i, j).getIsClicked()) {
+								this.defaite = true;
+							}
 						}
 					}
 					
@@ -335,13 +345,22 @@ public class Grille extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mouseX = e.getX();
-		mouseY = e.getY();
-		xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
-		yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
-		System.out.println("Un clic en " + mouseX + " et " + mouseY + " Les coordonnees sont " + xMat + " et " + yMat);
-		System.out.println("Les cases devoilees : " + ((this.size-2)*(this.size-2) - this.compterBombes()));
-		System.out.println("Les cases restantes : " + this.victoire);
+		int buttonDown = e.getButton();
+		if (buttonDown == MouseEvent.BUTTON1) {
+			mouseX = e.getX();
+			mouseY = e.getY();
+			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
+			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
+			System.out.println("Un clic en " + mouseX + " et " + mouseY + " Les coordonnees sont " + xMat + " et " + yMat);
+			System.out.println("Les cases devoilees : " + ((this.size-2)*(this.size-2) - this.compterBombes()));
+			System.out.println("Les cases restantes : " + this.compterCasesRestantes());
+	    }
+		else if(buttonDown == MouseEvent.BUTTON3) {
+			mouseX = e.getX();
+			mouseY = e.getY();
+			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
+			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
+		}
 		
 	}
 
