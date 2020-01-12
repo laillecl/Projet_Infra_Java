@@ -16,8 +16,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import java. util. Scanner;
 
 //TODO - Relier bouton Démineur à Demineur.java
 
@@ -81,17 +83,35 @@ public class Menu extends JFrame {
 	    panel.add(label);
 	}
 	
+	public static void comptageDesPoints() {
+		//TODO - Voir ajout des points
+	}
+	
 	public static void main(String[] args) {  
-	     new Menu();
 	     try{  
+	    	 //Connexion bdd
 	    	 Class.forName("com.mysql.cj.jdbc.Driver");  
-	    	 Connection con=DriverManager.getConnection(  
-	    	 "jdbc:mysql://localhost:3306/projet_infra","root","");  
+	    	 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root","");  
+	    	 
+	    	 //Requete SQL
 	    	 Statement stmt=con.createStatement();  
+	    	 
+	    	 //Verification username
+	    	 String first_name;
+	    	 first_name = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");
+	    	 
+	    	 //Connexion bdd
 	    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
-	    	 while(rs.next())  
-	    	 System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));  
+	    	 while(rs.next()) {
+	    		 if(rs.getString(2).equals(first_name)) {
+	    			//Affichage des jeux
+	    		     new Menu();
+	    		     comptageDesPoints();
+	    		 }
+	    	 }
 	    	 con.close();  
+
+	    	 //TODO - Regarder lien HTTP/JAVA (postman), HTML lien PHP, PHP, lien BDD
 	     }
 	     catch(Exception e){ 
 	    	 System.out.println(e);
