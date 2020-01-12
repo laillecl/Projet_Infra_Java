@@ -19,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import java. util. Scanner;
 
 //TODO - Relier bouton Démineur à Demineur.java
 
