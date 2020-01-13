@@ -19,11 +19,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import components.Grille;
+
+
 
 //TODO - Relier bouton Démineur à Demineur.java
 
 public class Menu extends JFrame {  
 	String path = "image.png";
+	private Grille grilleDemineur;   //On peut regarder les V/D du démineur
 	
 	public Menu() {
 		super();
@@ -83,6 +87,7 @@ public class Menu extends JFrame {
 	}
 	
 	public static void comptageDesPoints() {
+		
 		//TODO - Voir ajout des points
 	}
 	
