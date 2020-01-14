@@ -12,10 +12,10 @@ public class AddPointDemineur {
 	Statement stmt;
 	Connection con;
 	String name;
+	int scoreAvant;
 	
 
 	public AddPointDemineur(String name){
-		System.out.print("test");
 		this.name = name;
 	}
 	
@@ -40,22 +40,25 @@ public class AddPointDemineur {
 			stmt=con.createStatement();
 			//On récupère l'ancienne valeur du score
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT score FROM utilisateur WHERE user_name = " + this.name);
-			int scoreAvant = rs.getInt(5);
-			System.out.println(scoreAvant);
+			ResultSet rs=stmt.executeQuery("select * from utilisateur");  
+	    	 while(rs.next()) {
+	    		 if(rs.getString(2).equals(this.name)) {
+	    			 scoreAvant = rs.getInt(5);
+	   	    	 }
+	    	 }			
 			rs.close();
 			stmt.close();
 			
-			/*
 			//On set le score
 			PreparedStatement ps = con.prepareStatement("UPDATE utilisateur SET score = ? WHERE user_name = ?");
 			//TODO - AJOUTER LES POINTS, ICI ON CHANGE JUSTE LA VALEUR
-			ps.setInt(1, 5);
+			int nouveauScore = this.scoreAvant + 5;
+			ps.setInt(1, nouveauScore);
 			ps.setString(2, this.name);
 			ps.executeUpdate();
 			ps.close();
 		   	con.close();
-		   	*/
+		   	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}  
