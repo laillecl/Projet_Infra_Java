@@ -383,7 +383,6 @@ public class Grille extends JPanel implements MouseListener{
 						     catch(Exception e){ 
 						    	 System.out.println(e);
 						    }
-							
 					}
 					
 					// Si une bombe est cliquée, fin de partie
