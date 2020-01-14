@@ -19,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import components.Grille;
 
 
 
@@ -27,7 +26,6 @@ import components.Grille;
 
 public class Menu extends JFrame {  
 	String path = "image.png";
-	private Grille grilleDemineur;   //On peut regarder les V/D du démineur
 	public String name;
 	
 	public Menu() {
