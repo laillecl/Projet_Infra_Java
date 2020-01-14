@@ -105,7 +105,7 @@ public class Menu extends JFrame {
 	    	 Statement stmt=con.createStatement();  
 	    	 
 	    	 //Verification username
-	    	 String first_name;
+	    	 String first_name;	    			 
 	    	 first_name = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");
 	    	 
 	    	 //Connexion bdd
@@ -113,9 +113,11 @@ public class Menu extends JFrame {
 	    	 while(rs.next()) {
 	    		 if(rs.getString(2).equals(first_name)) {
 	    			//Affichage des jeux
+	    			 AddPointDemineur apd = new AddPointDemineur(first_name);
+	    		     apd.ajouterPoints();
 	    		     Menu menu = new Menu();
 	    		     menu.setName(first_name);
-	   	    		 }
+	   	    	 }
 	    	 }
 	    	 con.close();  
 

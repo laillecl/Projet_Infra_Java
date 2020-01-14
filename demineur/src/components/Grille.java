@@ -15,9 +15,6 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import lanceur_jeux.AddPointDemineur;
-import lanceur_jeux.Menu;
-
 public class Grille extends JPanel implements MouseListener{
 	
 	/**
@@ -360,29 +357,6 @@ public class Grille extends JPanel implements MouseListener{
 							g2.setFont(font2);
 							g2.drawString("VICTOIRE", X_ORIGIN, Y_ORIGIN );
 							g2.setFont(myFont);
-							//ICI ON AJOUTE LES POINTS DE LA VICTOIRE
-							try{  
-						    	 //Connexion bdd
-						    	 Class.forName("com.mysql.cj.jdbc.Driver");  
-						    	 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root","");  
-						    	 //Requete SQL
-						    	 Statement stmt=con.createStatement();  
-						    	 //Verification username
-						    	 String first_name;
-						    	 first_name = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");
-						    	 //Connexion bdd
-						    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
-						    	 while(rs.next()) {
-						    		 if(rs.getString(2).equals(first_name)) {
-						    			AddPointDemineur ajoutPoints = new AddPointDemineur(first_name);
-						    			ajoutPoints.ajouterPoints();
-						    		 }
-						    	 }
-						    	 con.close();  
-						     }
-						     catch(Exception e){ 
-						    	 System.out.println(e);
-						    }  
 					}
 					
 					// Si une bombe est cliquée, fin de partie

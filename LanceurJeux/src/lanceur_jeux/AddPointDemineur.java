@@ -15,6 +15,7 @@ public class AddPointDemineur {
 	
 
 	public AddPointDemineur(String name){
+		System.out.print("test");
 		this.name = name;
 	}
 	
@@ -37,6 +38,15 @@ public class AddPointDemineur {
 	void ajoutPointsBDD(Connection con) {
 	   	 try {
 			stmt=con.createStatement();
+			//On récupère l'ancienne valeur du score
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT score FROM utilisateur WHERE user_name = " + this.name);
+			int scoreAvant = rs.getInt(5);
+			System.out.println(scoreAvant);
+			rs.close();
+			stmt.close();
+			
+			/*
 			//On set le score
 			PreparedStatement ps = con.prepareStatement("UPDATE utilisateur SET score = ? WHERE user_name = ?");
 			//TODO - AJOUTER LES POINTS, ICI ON CHANGE JUSTE LA VALEUR
@@ -45,6 +55,7 @@ public class AddPointDemineur {
 			ps.executeUpdate();
 			ps.close();
 		   	con.close();
+		   	*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}  
