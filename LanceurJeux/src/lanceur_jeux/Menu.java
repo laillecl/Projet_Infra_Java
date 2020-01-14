@@ -95,11 +95,6 @@ public class Menu extends JFrame {
 	    panel.add(label);
 	}
 	
-	public static void comptageDesPoints() {
-		
-		//TODO - Voir ajout des points
-	}
-	
 	public static void main(String[] args) {  
 	     try{  
 	    	 //Connexion bdd
@@ -120,11 +115,7 @@ public class Menu extends JFrame {
 	    			//Affichage des jeux
 	    		     Menu menu = new Menu();
 	    		     menu.setName(first_name);
-	    		     comptageDesPoints();
-	    		     AddPointDemineur point = new AddPointDemineur(menu.getName());
-	    		     //TODO - REGARDER SI ON LANCE ICI L'AJOUT OU PAS
-	    		     point.ajouterPoints();
-	    		 }
+	   	    		 }
 	    	 }
 	    	 con.close();  
 

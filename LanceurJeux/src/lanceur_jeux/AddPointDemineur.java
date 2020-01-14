@@ -39,6 +39,7 @@ public class AddPointDemineur {
 			stmt=con.createStatement();
 			//On set le score
 			PreparedStatement ps = con.prepareStatement("UPDATE utilisateur SET score = ? WHERE user_name = ?");
+			//TODO - AJOUTER LES POINTS, ICI ON CHANGE JUSTE LA VALEUR
 			ps.setInt(1, 5);
 			ps.setString(2, this.name);
 			ps.executeUpdate();
