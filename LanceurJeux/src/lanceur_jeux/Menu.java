@@ -28,6 +28,7 @@ import components.Grille;
 public class Menu extends JFrame {  
 	String path = "image.png";
 	private Grille grilleDemineur;   //On peut regarder les V/D du démineur
+	public String name;
 	
 	public Menu() {
 		super();
@@ -60,6 +61,14 @@ public class Menu extends JFrame {
 	    this.linkButton(buttonDemineur);
 	    frame.add(buttonDemineur, BorderLayout.CENTER);  
 	    frame.add(buttonBattleShip, BorderLayout.CENTER); 
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public void linkButton(JButton bouton) {
@@ -109,8 +118,12 @@ public class Menu extends JFrame {
 	    	 while(rs.next()) {
 	    		 if(rs.getString(2).equals(first_name)) {
 	    			//Affichage des jeux
-	    		     new Menu();
+	    		     Menu menu = new Menu();
+	    		     menu.setName(first_name);
 	    		     comptageDesPoints();
+	    		     AddPointDemineur point = new AddPointDemineur(menu.getName());
+	    		     //TODO - REGARDER SI ON LANCE ICI L'AJOUT OU PAS
+	    		     point.ajouterPoints();
 	    		 }
 	    	 }
 	    	 con.close();  
