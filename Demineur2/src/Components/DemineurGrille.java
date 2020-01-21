@@ -403,8 +403,8 @@ public class DemineurGrille extends JPanel implements MouseListener{
 					    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
 					    	 while(rs.next()) {
 					    		 if(rs.getString(2).equals(first_name)) {
-					    			AddPointDemineur ajoutPoints = new AddPointDemineur(first_name);
-						    		ajoutPoints.ajouterPoints();
+					    			 AddPointDemineur ajoutPoints = new AddPointDemineur(first_name);
+							    		ajoutPoints.ajouterPoints();
 					    		 }
 					    	 }
 					    	 con.close();  
