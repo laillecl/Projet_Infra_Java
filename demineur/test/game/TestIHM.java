@@ -10,21 +10,21 @@ public class TestIHM {
 
 	@Test
 	public void testsetDef1() {
-		IHM ihm = new IHM();
+		IHMDemineur ihm = new IHMDemineur();
 		ihm.setDef(true);
-		assertEquals(true, IHM.getDef());
+		assertEquals(true, IHMDemineur.getDef());
 	}
 	
 	@Test
 	public void testsetDef2() {
-		IHM ihm = new IHM();
+		IHMDemineur ihm = new IHMDemineur();
 		ihm.setDef(false);
-		assertEquals(false, IHM.getDef());
+		assertEquals(false, IHMDemineur.getDef());
 	}
 	
 	@Test
 	public void testFin() {
-		IHM ihm = new IHM();
+		IHMDemineur ihm = new IHMDemineur();
 		Grille grille = new Grille();
 		grille.setDefaite(true);
 		ihm.setDef(true);

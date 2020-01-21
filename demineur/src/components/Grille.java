@@ -32,6 +32,7 @@ public class Grille extends JPanel implements MouseListener{
 	public boolean defaite = false;
 	public boolean victoire = false;
 	public boolean flag = false;
+	public int pourcentageBombes = 3;
 	
 	public static final int GRID_SIZE = 15;
 	public static final int X_ORIGIN = 20; // X coordinate of the top left
@@ -103,7 +104,7 @@ public class Grille extends JPanel implements MouseListener{
 				}
 				else {
 					this.matrice[i][j] = new Case(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1));
-					if (rand.nextInt(100) <10) {
+					if (rand.nextInt(100) < pourcentageBombes) {
 						this.matrice[i][j].setTileType(2);
 					}
 				}
@@ -360,6 +361,7 @@ public class Grille extends JPanel implements MouseListener{
 							g2.drawString("VICTOIRE", X_ORIGIN, Y_ORIGIN );
 							g2.setFont(myFont);
 							
+							
 							//ICI ON AJOUTE LES POINTS DE LA VICTOIRE
 							try{  
 						    	 //Connexion bdd
@@ -383,15 +385,16 @@ public class Grille extends JPanel implements MouseListener{
 						     catch(Exception e){ 
 						    	 System.out.println(e);
 						    }
+							
 					}
 					
 					// Si une bombe est cliquée, fin de partie
 					if(this.getCase(i, j).getTileType() == 2) {
-						if (victoire = false) {
-							if (this.getCase(i, j).getIsClicked()) {
-								this.setDefaite(true);
-							}
+						
+						if (this.getCase(i, j).getIsClicked()) {
+							this.setDefaite(true);
 						}
+						
 					}
 					
 					if(((this.size-2)*(this.size-2) - this.compterBombes()) == this.compterCasesRestantes()){
@@ -427,10 +430,9 @@ public class Grille extends JPanel implements MouseListener{
 			mouseY = e.getY();
 			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
 			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
-			System.out.println("Un clic en " + mouseX + " et " + mouseY + " Les coordonnees sont " + xMat + " et " + yMat);
 			System.out.println("Les cases devoilees : " + ((this.size-2)*(this.size-2) - this.compterBombes()));
 			System.out.println("Les cases restantes : " + this.compterCasesRestantes());
-			System.out.println("Flag : " + this.getFlag());
+			System.out.println("defaite : " + this.getDefaite());
 	    }
 		else if(buttonDown == MouseEvent.BUTTON3) {
 			this.setFlag(true);

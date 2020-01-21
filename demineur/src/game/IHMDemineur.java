@@ -1,21 +1,20 @@
 package game;
 
 import javax.swing.JFrame;
-import javax.swing.JRadioButton;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import components.Grille;
 
-public class IHM extends JFrame implements ActionListener{
+public class IHMDemineur extends JFrame implements ActionListener{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public IHM() {
+	public IHMDemineur() {
 		this.setTitle("Demineur");
 		this.setSize(500,500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,7 +25,7 @@ public class IHM extends JFrame implements ActionListener{
 		this.setContentPane(grille);
 		this.addMouseListener(grille);
 		
-		Button reset = new Button("reset");
+		Button reset = new Button("Recommencer");
 		reset.setVisible(true);
 		this.add(reset);
 	}
