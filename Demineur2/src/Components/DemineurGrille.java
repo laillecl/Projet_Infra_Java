@@ -1,5 +1,6 @@
-package components;
+package Components;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -15,15 +16,13 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import lanceur_jeux.AddPointDemineur;
-
-public class Grille extends JPanel implements MouseListener{
+public class DemineurGrille extends JPanel implements MouseListener{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public Case[][] matrice;
+	public DemineurCase[][] matrice;
 	public int size;
 	public int mouseX;
 	public int mouseY;
@@ -32,30 +31,30 @@ public class Grille extends JPanel implements MouseListener{
 	public boolean defaite = false;
 	public boolean victoire = false;
 	public boolean flag = false;
-	public int pourcentageBombes = 3;
+	public int pourcentageBombes = 5;
 	
 	public static final int GRID_SIZE = 15;
 	public static final int X_ORIGIN = 20; // X coordinate of the top left
-	public static final int Y_ORIGIN = 20; // Y coordinate of the top left
+	public static final int Y_ORIGIN = 50; // Y coordinate of the top left
 	public static final int TILE_SIZE = 29; // Size of the tile spaces
 	public static final int BORDER_SIZE = 1; // size of the border between spaces
 	
-	public Grille(int size) {
-		this.matrice = new Case[size][size];
+	public DemineurGrille(int size) {
+		this.matrice = new DemineurCase[size][size];
 		construireMatrice();
 	}
 
-	public Grille() {
+	public DemineurGrille() {
 		this.size = GRID_SIZE;
-		this.matrice = new Case[size][size];
+		this.matrice = new DemineurCase[size][size];
 		construireMatrice();
 	}
 	
-	public Case[][] getMatrice() {
+	public DemineurCase[][] getMatrice() {
 		return this.matrice;
 	}
 	
-	public Case getCase(int x, int y) {
+	public DemineurCase getDemineurCase(int x, int y) {
 		return this.matrice[x][y];
 	}
 	
@@ -83,10 +82,21 @@ public class Grille extends JPanel implements MouseListener{
 		this.flag = annek;
 	}
 	
+	public void setPourcentageBombes(int pourcentage) {
+		this.pourcentageBombes = pourcentage;
+	}
+	
+	public int getPourcentageBombes() {
+		return this.pourcentageBombes;
+	}
+	
 	public void resetMatrice() {
+		construireMatrice();
+		this.setVictoire(false);
+		this.setDefaite(false);
 		for (int i = 0; i < this.size; i++) {
 			for (int j = 0; j < this.size; j++) {
-				this.matrice[i][j] = null;
+				this.getDemineurCase(i, j).setIsClicked(false);
 			}
 		}
 	}
@@ -97,13 +107,13 @@ public class Grille extends JPanel implements MouseListener{
 		for (int i = 0; i < this.size; i++) {
 			for (int j = 0; j < this.size; j++) {
 				if(i == 0 || j == 0) {
-					this.matrice[i][j] = new Case(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1),1);
+					this.matrice[i][j] = new DemineurCase(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1),1);
 				}
 				else if(i == this.size -1 || j == this.size -1) {
-					this.matrice[i][j] = new Case(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1),1);
+					this.matrice[i][j] = new DemineurCase(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1),1);
 				}
 				else {
-					this.matrice[i][j] = new Case(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1));
+					this.matrice[i][j] = new DemineurCase(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1));
 					if (rand.nextInt(100) < pourcentageBombes) {
 						this.matrice[i][j].setTileType(2);
 					}
@@ -112,7 +122,7 @@ public class Grille extends JPanel implements MouseListener{
 		}
 	}
 	
-	public int caseAdjacenteBombe(int i,int j) {
+	public int DemineurCaseAdjacenteBombe(int i,int j) {
 		int compteurBombes = 0;
 		if (this.matrice[i-1][j-1].getTileType() == 2){
 			compteurBombes++;
@@ -141,7 +151,7 @@ public class Grille extends JPanel implements MouseListener{
 		return compteurBombes;		
 	}
 	
-	public boolean caseAdjacenteVide(int i, int j) {
+	public boolean DemineurCaseAdjacenteVide(int i, int j) {
 		boolean adjVide = false;
 		if (this.matrice[i-1][j-1].getTileType() == 1){
 			adjVide = true;
@@ -171,74 +181,74 @@ public class Grille extends JPanel implements MouseListener{
 	}
 	
 	// Fonction recursive
-	public void devoileCaseAdjacente(int i, int j) {
-		if (this.caseAdjacenteBombe(i, j) < 1){
-				this.getCase(i-1, j-1).setIsClicked(true);
-				this.getCase(i-1, j).setIsClicked(true);
-				this.getCase(i-1, j+1).setIsClicked(true);
-				this.getCase(i, j-1).setIsClicked(true);
-				this.getCase(i, j+1).setIsClicked(true);
-				this.getCase(i+1, j-1).setIsClicked(true);
-				this.getCase(i+1, j).setIsClicked(true);
-				this.getCase(i+1, j+1).setIsClicked(true);
+	public void devoileDemineurCaseAdjacente(int i, int j) {
+		if (this.DemineurCaseAdjacenteBombe(i, j) < 1){
+				this.getDemineurCase(i-1, j-1).setIsClicked(true);
+				this.getDemineurCase(i-1, j).setIsClicked(true);
+				this.getDemineurCase(i-1, j+1).setIsClicked(true);
+				this.getDemineurCase(i, j-1).setIsClicked(true);
+				this.getDemineurCase(i, j+1).setIsClicked(true);
+				this.getDemineurCase(i+1, j-1).setIsClicked(true);
+				this.getDemineurCase(i+1, j).setIsClicked(true);
+				this.getDemineurCase(i+1, j+1).setIsClicked(true);
 				
-				devoileCaseAdjGauche(i,j);
-				devoileCaseAdjDroite(i,j);
-//				devoileCaseAdjHaut(i,j);
-//				devoileCaseAdjBas(i,j);
+				devoileDemineurCaseAdjGauche(i,j);
+				devoileDemineurCaseAdjDroite(i,j);
+//				devoileDemineurCaseAdjHaut(i,j);
+//				devoileDemineurCaseAdjBas(i,j);
 				
 				// pour debug
 		}
 	}
 	
-	public void devoileCaseAdjGauche(int i, int j) {
-		if (this.caseAdjacenteBombe(i, j) < 1){
-			this.getCase(i-1, j-1).setIsClicked(true);
-			this.getCase(i-1, j).setIsClicked(true);
-			this.getCase(i-1, j+1).setIsClicked(true);
+	public void devoileDemineurCaseAdjGauche(int i, int j) {
+		if (this.DemineurCaseAdjacenteBombe(i, j) < 1){
+			this.getDemineurCase(i-1, j-1).setIsClicked(true);
+			this.getDemineurCase(i-1, j).setIsClicked(true);
+			this.getDemineurCase(i-1, j+1).setIsClicked(true);
 			if(this.matrice[i-1][j-1].getTileType() != 1){
-				devoileCaseAdjGauche(i-1,j-1);
+				devoileDemineurCaseAdjGauche(i-1,j-1);
 			}
 			if(this.matrice[i-1][j].getTileType() != 1){
-				devoileCaseAdjGauche(i-1,j);
+				devoileDemineurCaseAdjGauche(i-1,j);
 			}
 			if(this.matrice[i-1][j+1].getTileType() != 1){
-				devoileCaseAdjGauche(i-1,j+1);
+				devoileDemineurCaseAdjGauche(i-1,j+1);
 			}
 		}
 	}
 	
-	public void devoileCaseAdjDroite(int i, int j) {
-		if (this.caseAdjacenteBombe(i, j) < 1){
-			this.getCase(i+1, j-1).setIsClicked(true);
-			this.getCase(i+1, j).setIsClicked(true);
-			this.getCase(i+1, j+1).setIsClicked(true);
+	public void devoileDemineurCaseAdjDroite(int i, int j) {
+		if (this.DemineurCaseAdjacenteBombe(i, j) < 1){
+			this.getDemineurCase(i+1, j-1).setIsClicked(true);
+			this.getDemineurCase(i+1, j).setIsClicked(true);
+			this.getDemineurCase(i+1, j+1).setIsClicked(true);
 			if(this.matrice[i+1][j-1].getTileType() != 1){
-				devoileCaseAdjacente(i+1,j-1);
+				devoileDemineurCaseAdjacente(i+1,j-1);
 			}
 			if(this.matrice[i+1][j].getTileType() != 1){
-				devoileCaseAdjacente(i+1,j);
+				devoileDemineurCaseAdjacente(i+1,j);
 			}
 			if(this.matrice[i+1][j+1].getTileType() != 1){
-				devoileCaseAdjacente(i+1,j+1);
+				devoileDemineurCaseAdjacente(i+1,j+1);
 			}
 		}
 	}
 	
-	public void devoileCaseAdjHaut(int i, int j) {
-		if (this.caseAdjacenteBombe(i, j) < 1){
-			this.getCase(i, j-1).setIsClicked(true);
+	public void devoileDemineurCaseAdjHaut(int i, int j) {
+		if (this.DemineurCaseAdjacenteBombe(i, j) < 1){
+			this.getDemineurCase(i, j-1).setIsClicked(true);
 			if(this.matrice[i][j-1].getTileType() != 1){
-				devoileCaseAdjacente(i,j-1);
+				devoileDemineurCaseAdjacente(i,j-1);
 			}
 		}
 	}
 	
-	public void devoileCaseAdjBas(int i, int j) {
-		if (this.caseAdjacenteBombe(i, j) < 1){
-			this.getCase(i, j+1).setIsClicked(true);
+	public void devoileDemineurCaseAdjBas(int i, int j) {
+		if (this.DemineurCaseAdjacenteBombe(i, j) < 1){
+			this.getDemineurCase(i, j+1).setIsClicked(true);
 			if(this.matrice[i][j+1].getTileType() != 1){
-				devoileCaseAdjacente(i,j+1);
+				devoileDemineurCaseAdjacente(i,j+1);
 			}
 		}
 	}
@@ -247,7 +257,7 @@ public class Grille extends JPanel implements MouseListener{
 		int killian = 0;
 		for (int i = 0; i < this.size; i++) {
 			for (int j = 0; j < this.size; j++) {
-				if(this.getCase(i, j).getTileType() == 2) {
+				if(this.getDemineurCase(i, j).getTileType() == 2) {
 					killian++;
 				}
 			}
@@ -255,12 +265,12 @@ public class Grille extends JPanel implements MouseListener{
 		return killian;
 	}
 	
-	public int compterCasesRestantes() {
+	public int compterDemineurCasesRestantes() {
 		int gabriel = 0;
 		for (int i = 0; i < this.size; i++) {
 			for (int j = 0; j < this.size; j++) {
-				if(this.getCase(i, j).getTileType() == 0) {
-					if(this.getCase(i, j).getIsClicked() == true) {
+				if(this.getDemineurCase(i, j).getTileType() == 0) {
+					if(this.getDemineurCase(i, j).getIsClicked() == true) {
 						gabriel++;
 					}
 				}
@@ -280,8 +290,8 @@ public class Grille extends JPanel implements MouseListener{
 				
 				if(this.getFlag() == true) {
 					if (i == xMat && j == yMat) {
-						this.getCase(i, j).setIsFlagged(true);
-						this.getCase(i, j).setDrapeau(!this.getCase(i, j).getDrapeau());
+						this.getDemineurCase(i, j).setIsFlagged(true);
+						this.getDemineurCase(i, j).setDrapeau(!this.getDemineurCase(i, j).getDrapeau());
 					}
 				}
 				
@@ -295,46 +305,46 @@ public class Grille extends JPanel implements MouseListener{
 				}
 				else {
 					g2.setColor(Color.DARK_GRAY);
-					// Est-ce que la case est cliquée ?
+					// Est-ce que la DemineurCase est cliquée ?
 					if (i == xMat && j == yMat) {
-						if(this.getCase(i, j).getIsFlagged() == false){
+						if(this.getDemineurCase(i, j).getIsFlagged() == false){
 							this.matrice[i][j].setIsClicked(true);
-							devoileCaseAdjacente(i,j);
+							devoileDemineurCaseAdjacente(i,j);
 						}
 					}
 					
 					// Si oui on change sa couleur
-					if(this.getCase(i, j).isClicked) {
+					if(this.getDemineurCase(i, j).isClicked) {
 						g2.setColor(Color.LIGHT_GRAY);
 						// Si c'est un bombe, icone bombe
-						if(this.getCase(i, j).getTileType() == 2) {
-							if(this.getCase(i, j).getIsFlagged() == false){
+						if(this.getDemineurCase(i, j).getTileType() == 2) {
+							if(this.getDemineurCase(i, j).getIsFlagged() == false){
 								g2.setColor(Color.red);
 							}
 						}
 					}
 					
 					// Sinon on laisse un rectangle gris
-					if(this.getCase(i, j).getIsFlagged() == false){
+					if(this.getDemineurCase(i, j).getIsFlagged() == false){
 						g2.fillRect(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1), TILE_SIZE, TILE_SIZE);
 					}
 					
-					if(this.getCase(i, j).getTileType() == 2) {
-						if(this.getCase(i, j).getIsFlagged() == false){
-							if(this.getCase(i, j).getIsClicked()) {
+					if(this.getDemineurCase(i, j).getTileType() == 2) {
+						if(this.getDemineurCase(i, j).getIsFlagged() == false){
+							if(this.getDemineurCase(i, j).getIsClicked()) {
 								g2.setColor(Color.black);
 								g2.fillOval(X_ORIGIN + i*(TILE_SIZE+1)+(TILE_SIZE)/8, Y_ORIGIN + j*(TILE_SIZE+1)+(TILE_SIZE)/8, (TILE_SIZE)*6/8, (TILE_SIZE)*6/8);
 							}
 						}
 					}
 					
-					int cpt = caseAdjacenteBombe(i,j);
+					int cpt = DemineurCaseAdjacenteBombe(i,j);
 					String str = String.valueOf(cpt);
 					
 					if(cpt != 0) {
-						if(this.getCase(i, j).isClicked) {
-							if(this.getCase(i,j).getTileType() != 2) {
-								if(this.getCase(i, j).getIsFlagged() == false){
+						if(this.getDemineurCase(i, j).isClicked) {
+							if(this.getDemineurCase(i,j).getTileType() != 2) {
+								if(this.getDemineurCase(i, j).getIsFlagged() == false){
 									g2.setColor(Color.black);
 									g2.drawString(str, X_ORIGIN + i*(TILE_SIZE+1) + TILE_SIZE/2, Y_ORIGIN + j*(TILE_SIZE+1) + TILE_SIZE/2);
 								}
@@ -342,67 +352,8 @@ public class Grille extends JPanel implements MouseListener{
 						}
 					}
 					
-					// condition defaite
-					if(this.getDefaite() == true) {
-						this.getCase(i,	j).setIsClicked(true);
-						Font font2 = new Font("Arial", Font.BOLD, 24);
-						g2.setColor(Color.red);
-						g2.setFont(font2);
-						g2.drawString("DEFAITE", X_ORIGIN, Y_ORIGIN );
-						g2.setFont(myFont);
-					}
-					
-					// condition victoire
-					if(this.getVictoire() == true) {
-							this.getCase(i,	j).setIsClicked(true);
-							Font font2 = new Font("Arial", Font.BOLD, 24);
-							g2.setColor(Color.green);
-							g2.setFont(font2);
-							g2.drawString("VICTOIRE", X_ORIGIN, Y_ORIGIN );
-							g2.setFont(myFont);
-							
-							
-							//ICI ON AJOUTE LES POINTS DE LA VICTOIRE
-							try{  
-						    	 //Connexion bdd
-						    	 Class.forName("com.mysql.cj.jdbc.Driver");  
-						    	 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root","");  
-						    	 //Requete SQL
-						    	 Statement stmt=con.createStatement();  
-						    	 //Verification username
-						    	 String first_name;
-						    	 first_name = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");
-						    	 //Connexion bdd
-						    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
-						    	 while(rs.next()) {
-						    		 if(rs.getString(2).equals(first_name)) {
-						    			AddPointDemineur ajoutPoints = new AddPointDemineur(first_name);
-						    			ajoutPoints.ajouterPoints();
-						    		 }
-						    	 }
-						    	 con.close();  
-						     }
-						     catch(Exception e){ 
-						    	 System.out.println(e);
-						    }
-							
-					}
-					
-					// Si une bombe est cliquée, fin de partie
-					if(this.getCase(i, j).getTileType() == 2) {
-						
-						if (this.getCase(i, j).getIsClicked()) {
-							this.setDefaite(true);
-						}
-						
-					}
-					
-					if(((this.size-2)*(this.size-2) - this.compterBombes()) == this.compterCasesRestantes()){
-						this.setVictoire(true);
-					}
-					
-					if(this.getCase(i, j).getIsFlagged()) {
-						if(this.getCase(i, j).getDrapeau() == false) {
+					if(this.getDemineurCase(i, j).getIsFlagged()) {
+						if(this.getDemineurCase(i, j).getDrapeau() == false) {
 							g2.setColor(Color.black);
 							g2.drawLine(X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)/2, Y_ORIGIN + j*(TILE_SIZE+1) + (TILE_SIZE)/8, X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)/2, Y_ORIGIN + j*(TILE_SIZE+1) + (TILE_SIZE)*7/8);
 							int xCoords[] = {X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)/2,X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)/2,X_ORIGIN + i*(TILE_SIZE+1) + (TILE_SIZE)*7/8};
@@ -415,10 +366,49 @@ public class Grille extends JPanel implements MouseListener{
 							g2.fillRect(X_ORIGIN + i*(TILE_SIZE+1), Y_ORIGIN + j*(TILE_SIZE+1), TILE_SIZE, TILE_SIZE);
 						}
 					}
+					
+					// SET DEFAITE
+					if(this.getDefaite() == true) {
+						this.getDemineurCase(i,	j).setIsClicked(true);
+						Font font2 = new Font("Arial", Font.BOLD, 24);
+						g2.setColor(Color.red);
+						g2.setFont(font2);
+						g2.drawString("DEFAITE", X_ORIGIN, Y_ORIGIN );
+						g2.setFont(myFont);
+					}
+					
+					// SET VICTOIRE
+					if(this.getVictoire() == true) {
+							
+						this.getDemineurCase(i,	j).setIsClicked(true);
+						Font font2 = new Font("Arial", Font.BOLD, 24);
+						g2.setColor(Color.green);
+						g2.setFont(font2);
+						g2.drawString("VICTOIRE", X_ORIGIN, Y_ORIGIN );
+						g2.setFont(myFont);
+						
+						//ANNEK
+							
+					}
+					
+					// CONDITION DEFAITE
+					if(this.getDemineurCase(i, j).getTileType() == 2) {
+						if(this.getVictoire() == false) {
+							if (this.getDemineurCase(i, j).getIsClicked()) {
+								this.setDefaite(true);
+							}
+						}
+					}
+					
+					// CONDITION VICTOIRE
+					if(this.getDefaite() == false) {
+						if(((this.size-2)*(this.size-2) - this.compterBombes()) == this.compterDemineurCasesRestantes()){
+							this.setVictoire(true);
+						}
+					}
 				}
 			}
 		}
-		
 	}
 
 	@Override
@@ -430,9 +420,10 @@ public class Grille extends JPanel implements MouseListener{
 			mouseY = e.getY();
 			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
 			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
-			System.out.println("Les cases devoilees : " + ((this.size-2)*(this.size-2) - this.compterBombes()));
-			System.out.println("Les cases restantes : " + this.compterCasesRestantes());
-			System.out.println("defaite : " + this.getDefaite());
+			System.out.println("");
+			System.out.println("Drapeau Global : " + this.getFlag());
+			System.out.println("Drapeau Local : " + this.getDemineurCase(xMat,yMat).getDrapeau());
+			System.out.println("Drapeau Local Boolean : " + this.getDemineurCase(xMat,yMat).getIsFlagged());
 	    }
 		else if(buttonDown == MouseEvent.BUTTON3) {
 			this.setFlag(true);
@@ -440,8 +431,10 @@ public class Grille extends JPanel implements MouseListener{
 			mouseY = e.getY();
 			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
 			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
-			System.out.println("Flag : " + this.getFlag());
-			System.out.println("La case a un drapeau : " + this.getCase(2, 2).getIsFlagged());
+			System.out.println("");
+			System.out.println("Drapeau Global : " + this.getFlag());
+			System.out.println("Drapeau Local : " + this.getDemineurCase(xMat,yMat).getDrapeau());
+			System.out.println("Drapeau Local Boolean : " + this.getDemineurCase(xMat,yMat).getIsFlagged());
 		}
 		
 	}

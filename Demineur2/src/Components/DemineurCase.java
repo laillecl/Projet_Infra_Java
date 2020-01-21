@@ -1,6 +1,6 @@
-package components;
+package Components;
 
-public class Case {
+public class DemineurCase {
 
 	//constants
 	public static final int DEFAULT_POSITION_X = 0;
@@ -11,12 +11,12 @@ public class Case {
 	public int positionX;
 	public int positionY;
 	public boolean isClicked;
-	public int tileType;	// 0 si case normale, 1 si case vide, 2 si bombe
+	public int tileType;	// 0 si DemineurCase normale, 1 si DemineurCase vide, 2 si bombe
 	public boolean isFlagged;
 	public boolean drapeau = false;
 	
 	//constructors 	
-	public Case(int X, int Y, int type){
+	public DemineurCase(int X, int Y, int type){
 		this.positionX = X;
 		this.positionY = Y;	
 		this.tileType = type ;
@@ -24,7 +24,7 @@ public class Case {
 		this.isFlagged = false;
 	}
 	
-	public Case(int X, int Y){
+	public DemineurCase(int X, int Y){
 		this.positionX = X;
 		this.positionY = Y;	
 		this.tileType = DEFAULT_TILE_TYPE;
@@ -32,7 +32,7 @@ public class Case {
 		this.isFlagged = false;
 	}
 	
-	public Case() {
+	public DemineurCase() {
 		this.positionX = DEFAULT_POSITION_X;
 		this.positionY = DEFAULT_POSITION_Y;
 		this.tileType = DEFAULT_TILE_TYPE;

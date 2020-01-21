@@ -1,11 +1,11 @@
-package game;
+package Game;
 
-public class Demineur implements Runnable{
+public class DemineurMain implements Runnable{
 	
-	IHMDemineur ihm = new IHMDemineur();
+	DemineurIHM ihm = new DemineurIHM();
 	
     public static void main(String args[]) {
-    	new Thread(new Demineur()).start();
+    	new Thread(new DemineurMain()).start();
     }
 
 	@Override

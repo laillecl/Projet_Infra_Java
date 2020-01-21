@@ -9,18 +9,18 @@ public class TestGrille {
 	//TODO
 	@Test
 	public void testContructeur1() {
-		Grille grille = new Grille(5);
+		DemineurGrille grille = new DemineurGrille(5);
 	}
 
 	//TODO
 	@Test
 	public void testContructeur2() {
-		Grille grille = new Grille();
+		DemineurGrille grille = new DemineurGrille();
 	}
 	
 	@Test
 	public void getMatrice1() {
-		Grille grille = new Grille(5);
+		DemineurGrille grille = new DemineurGrille(5);
 		Case[][] matrice = new Case[5][5];
 		assertEquals(matrice, grille.getMatrice());
 		
@@ -29,7 +29,7 @@ public class TestGrille {
 	//TODO
 	@Test
 	public void getMatrice2() {
-		Grille grille = new Grille();
+		DemineurGrille grille = new DemineurGrille();
 		Case[][] matrice = new Case[15][15];
 		assertEquals(matrice, grille.getMatrice());
 		
@@ -37,26 +37,26 @@ public class TestGrille {
 	
 	@Test
 	public void getCase1() {
-		Grille grille = new Grille(3);
+		DemineurGrille grille = new DemineurGrille(3);
 		assertEquals(grille.getCase(2,2), grille.getCase(2,2));
 	}
 	
 	@Test
 	public void defaite1() {
-		Grille grille = new Grille(3);
+		DemineurGrille grille = new DemineurGrille(3);
 		assertEquals(false, grille.getDefaite());
 	}
 	
 	@Test
 	public void defaite2() {
-		Grille grille = new Grille(3);
+		DemineurGrille grille = new DemineurGrille(3);
 		grille.setDefaite(true);
 		assertEquals(true, grille.getDefaite());
 	}
 	
 	@Test
 	public void defaite3() {
-		Grille grille = new Grille(3);
+		DemineurGrille grille = new DemineurGrille(3);
 		grille.setDefaite(false);
 		assertEquals(false, grille.getDefaite());
 	}

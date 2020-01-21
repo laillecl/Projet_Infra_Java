@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import components.Grille;
+import components.DemineurGrille;
 
 public class TestIHM {
 
@@ -25,7 +25,7 @@ public class TestIHM {
 	@Test
 	public void testFin() {
 		IHMDemineur ihm = new IHMDemineur();
-		Grille grille = new Grille();
+		DemineurGrille grille = new DemineurGrille();
 		grille.setDefaite(true);
 		ihm.setDef(true);
 	}
