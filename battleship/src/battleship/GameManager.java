@@ -58,8 +58,14 @@ public class GameManager {
 		Player p2 = new Player(2);
 		
 		// Instantiate ships
-		Tile[][] p1Mat = this.placeBoats(this.initBoats());
-		Tile[][] p2Mat = this.placeBoats(this.initBoats());
+		Tile[][] p1Mat = this.placeBoats(this.initBoats(), 1);
+		for(int i = 0; i < 10; i++) {
+			for(int j = 0; j < 10; j++) {
+				System.out.println(p1Mat[i][j].isSeaOrBoat() + " ");
+			}
+			System.out.println("\n");
+		}
+		Tile[][] p2Mat = this.placeBoats(this.initBoats(), 2);
 		// Instantiate grids
 		Grid grid = new Grid(p1Mat);
 		SmallGrid smallGrid = new SmallGrid(gridSize);
@@ -107,9 +113,9 @@ public class GameManager {
 		this.currentPlayer = currentPlayer;
 	}
 	
-	public Tile[][] placeBoats(Boat[] boats) 
+	public Tile[][] placeBoats(Boat[] boats, int playerNumber) 
 	{
-		GridCreator creator = new GridCreator(boats, 10, frame);
+		GridCreator creator = new GridCreator(boats, 10, frame, playerNumber);
 		creator.setup();
 		frame.getContentPane().add(creator);
 		frame.getContentPane().repaint();

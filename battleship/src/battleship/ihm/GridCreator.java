@@ -30,6 +30,7 @@ import battleship.components.Tile;
 public class GridCreator extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private BufferedImage gridImage = null;
+	private String playerImage = null;
 	private Tile[][] tileMatrix;
 	private Boat[] boats;
 	private JPanel[] panelArray;
@@ -42,15 +43,15 @@ public class GridCreator extends JPanel {
 	public static final int BORDER_SIZE = 5;
 	public static boolean currentlyPlacingShip = false;
 
-	public GridCreator(Boat[] boats, JFrame app) {
-		this(boats, 10, app);
+	public GridCreator(Boat[] boats, JFrame app, int playerNumber) {
+		this(boats, 10, app, playerNumber);
 	}
 
-	public GridCreator(Boat[] boats, int gridSize, JFrame app) {
-		this(boats, gridSize, "gridLabels.png", app);
+	public GridCreator(Boat[] boats, int gridSize, JFrame app, int playerNumber) {
+		this(boats, gridSize, "gridLabels.png", app, playerNumber);
 	}
 
-	public GridCreator(Boat[] boats, int gridSize, String path, JFrame app) {
+	public GridCreator(Boat[] boats, int gridSize, String path, JFrame app, int playerNumber) {
 		setLayout(null);
 		setBackground(Color.white);
 		setLocation(0,0);
@@ -67,9 +68,15 @@ public class GridCreator extends JPanel {
 		this.setTileMatrix(tileMap);
 		this.setBoats(boats);
 		panelArray = new JPanel[boats.length];
+		
+		if (playerNumber == 1) {
+			this.playerImage = "BoatPartP1.png";
+		} else {
+			this.playerImage = "BoatPartP2.png";
+		}
 
 		try {
-			gridImage = ImageIO.read(new File(path));
+			this.gridImage = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			System.out.println("Failed to load image");
 		}
@@ -80,31 +87,15 @@ public class GridCreator extends JPanel {
 	 * Does all the work to setup the grid.
 	 */
 	public void setup() {
-		int largestShipSize = 0;
-		for (int i = 0; i < boats.length; i++){
-			int temp = boats[i].getHealth();
-			if (temp > largestShipSize){
-				largestShipSize = temp;
-			}
-		}
-		
-		System.out.println(largestShipSize);
-		
-		int windowWidth = X_ORIGIN + ((TILE_SIZE + BORDER_SIZE) * boats.length) + (2 * BORDER_SIZE) + 50
-				+ ((largestShipSize + 1) * TILE_SIZE);
-		int windowHeight = Y_ORIGIN + ((TILE_SIZE + BORDER_SIZE) * (this.getTileMatrix().length + 1));
-		if (windowHeight < 2 * TILE_SIZE + (boats.length * (TILE_SIZE + BORDER_SIZE + 2))) {
-			windowHeight = 2 * TILE_SIZE + (boats.length * (TILE_SIZE + BORDER_SIZE + 2));
-		}
-		window.setPreferredSize(new Dimension(windowWidth, windowHeight));
-		window.setMinimumSize(new Dimension(windowWidth, windowHeight));
+		window.setPreferredSize(new Dimension((X_ORIGIN + BORDER_SIZE + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)), 
+				Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE+BORDER_SIZE)*this.getTileMatrix().length)));
 		window.pack();
 		setSize(window.getContentPane().getSize());
 
 		// creates a label with the grid image and adds it to the screen
 		JLabel gridLabel = new JLabel(new ImageIcon(gridImage));
-		gridLabel.setSize(X_ORIGIN + this.getTileMatrix().length + 1 + ((TILE_SIZE + BORDER_SIZE) * this.getTileMatrix().length),
-				Y_ORIGIN + this.getTileMatrix().length + 1 + ((TILE_SIZE + BORDER_SIZE) * (this.getTileMatrix().length)));
+		gridLabel.setSize(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * this.getTileMatrix().length),
+				Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * (this.getTileMatrix().length)));
 		gridLabel.setLocation(0, 0);
 		gridLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		gridLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -168,15 +159,14 @@ public class GridCreator extends JPanel {
 			// loops through the ship pieces in the ship
 			for (int i = 0; i < boats[j].getHealth(); i++) {
 				// adds labels containing each image to the panel
-				ImageIcon icon = new ImageIcon(new ImageIcon("Player1.png").getImage());
+				ImageIcon icon = new ImageIcon(new ImageIcon(this.playerImage).getImage());
 				JLabel label = new JLabel(icon);
 				panel.add(label);
 				panel.add(Box.createRigidArea(new Dimension(BORDER_SIZE + 2, 0)));
 				// places the panel off to the side of the grid
-				// panel.setLocation(650, 50 + (j * 50));
 
 			}
-			panel.setLocation(X_ORIGIN + ((TILE_SIZE + BORDER_SIZE) * this.getTileMatrix().length) + (2 * BORDER_SIZE) + 50,
+			panel.setLocation(X_ORIGIN + ((TILE_SIZE + BORDER_SIZE) * this.getTileMatrix().length) + (2 * BORDER_SIZE),
 					TILE_SIZE + BORDER_SIZE + 2 + (j * (TILE_SIZE + BORDER_SIZE + 2)));
 			panel.setSize(boats[j].getHealth() * (TILE_SIZE + BORDER_SIZE), TILE_SIZE);
 			boats[shipNum].setStartingOffGridPosition(panel.getLocation());
@@ -324,8 +314,8 @@ public class GridCreator extends JPanel {
 	 */
 	private void placeShipPanelOnGrid(int x, int y, int shipNum, boolean isVertical) {
 		// sets the location
-		panelArray[shipNum].setLocation(X_ORIGIN + x + (((TILE_SIZE + BORDER_SIZE) * x) + BORDER_SIZE / 2),
-				Y_ORIGIN + y + ((TILE_SIZE + BORDER_SIZE) * y) + BORDER_SIZE / 2);
+		panelArray[shipNum].setLocation(X_ORIGIN + BORDER_SIZE + (((TILE_SIZE + BORDER_SIZE) * x) + BORDER_SIZE / 2),
+				Y_ORIGIN + 3 + ((TILE_SIZE + BORDER_SIZE) * y) + BORDER_SIZE / 2);
 		// checks for an intersection with another panel
 		if (isIntersection(panelArray[shipNum])) {
 			// if it is vertical
@@ -407,11 +397,15 @@ public class GridCreator extends JPanel {
 				if (isVertical) {
 					// add a ship piece at the point but with i added to the y
 					// coordinate
-					this.getTileMatrix()[(int) location.getX()][(int) location.getY() + i].setSeaOrBoat(1);;
+					System.out.println((int) location.getX());
+					System.out.println((int) location.getY() + i);
+					this.getTileMatrix()[(int) location.getX()][(int) location.getY() + i].setSeaOrBoat(1);
 				} else {
 					// add a ship piece at the point but with i added to the x
 					// coordinate
-					this.getTileMatrix()[(int) location.getX() + i][(int) location.getY()].setSeaOrBoat(1);;
+					this.getTileMatrix()[(int) location.getX() + i][(int) location.getY()].setSeaOrBoat(1);
+					System.out.println((int) location.getX() + i);
+					System.out.println((int) location.getY());
 				}
 			}
 		}
