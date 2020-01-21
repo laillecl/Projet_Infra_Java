@@ -79,10 +79,10 @@ public class GameManager {
 	}
 	
 	// loop method for game turns 
-	public void gameLoop(Player p1, Player p2, MouseEvent e){
+	public void gameLoop(Player p1, Player p2){
 		while(p1.isTurn == true) {
 			System.out.println("Player" + p1.getPlayerNumber()+ "is playing...");
-			
+			p1.setTurn(false);
 			
 		}
 	}
@@ -107,9 +107,9 @@ public class GameManager {
 		this.currentPlayer = currentPlayer;
 	}
 	
-	public Tile[][] placeBoats(Boat[] ships) 
+	public Tile[][] placeBoats(Boat[] boats) 
 	{
-		GridCreator creator = new GridCreator(ships, 10, frame);
+		GridCreator creator = new GridCreator(boats, 10, frame);
 		creator.setup();
 		frame.getContentPane().add(creator);
 		frame.getContentPane().repaint();
@@ -124,10 +124,11 @@ public class GameManager {
 	
 	public Boat[] initBoats()
 	{
+		String[] boatNames = {"Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer"};
 		Boat[] boats = new Boat[carrierAmount + battleshipAmount + cruiserAmount + submarineAmount + destroyerAmount];
 		for (int i = 0; i < boats.length; i++)
 		{
-			boats[i] = new Boat("Carrier");
+			boats[i] = new Boat(boatNames[i]);
 		}
 		return boats;
 	}

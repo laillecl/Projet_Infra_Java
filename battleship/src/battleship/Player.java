@@ -1,7 +1,6 @@
 package battleship;
 
 import battleship.components.Boat;
-import battleship.components.Tile;
 
 public class Player {
 	

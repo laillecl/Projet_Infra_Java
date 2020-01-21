@@ -65,7 +65,7 @@ public class GridCreator extends JPanel {
 		}
 
 		this.setTileMatrix(tileMap);
-		this.boats = boats;
+		this.setBoats(boats);
 		panelArray = new JPanel[boats.length];
 
 		try {
@@ -87,6 +87,8 @@ public class GridCreator extends JPanel {
 				largestShipSize = temp;
 			}
 		}
+		
+		System.out.println(largestShipSize);
 		
 		int windowWidth = X_ORIGIN + ((TILE_SIZE + BORDER_SIZE) * boats.length) + (2 * BORDER_SIZE) + 50
 				+ ((largestShipSize + 1) * TILE_SIZE);
@@ -510,11 +512,11 @@ public class GridCreator extends JPanel {
 	 * Returns if setup is over
 	 */
 	public boolean isSetupOver() {
-		return setupOver;
+		return this.setupOver;
 	}
 
 	public JButton getButton() {
-		return endSetup;
+		return this.endSetup;
 	}
 
 	public Tile[][] getTileMatrix() {
@@ -523,6 +525,14 @@ public class GridCreator extends JPanel {
 
 	public void setTileMatrix(Tile[][] tileMatrix) {
 		this.tileMatrix = tileMatrix;
+	}
+
+	public Boat[] getBoats() {
+		return this.boats;
+	}
+
+	public void setBoats(Boat[] boats) {
+		this.boats = boats;
 	}
 
 }

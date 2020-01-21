@@ -94,7 +94,7 @@ public class Grid extends JPanel implements MouseListener {
 				this.setyMat(Y);
 				System.out.println("Un clic en " + this.getMouseX() + " et " + this.getMouseY() + " Les coordonnees sont " + this.getxMat() + " et " + this.getyMat());
 				
-				System.out.println(this.getTileMatrix()[X][Y].getTileName());
+				System.out.println(this.getTileMatrix()[X][Y].getTileName() + " : " + this.getTileMatrix()[X][Y].isSeaOrBoat());
 				this.getTileMatrix()[X][Y].setClicked(true);
 			
 				repaint();
