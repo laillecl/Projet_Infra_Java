@@ -13,7 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-
+import battleship.Player;
 import battleship.components.*;
 
 
@@ -38,6 +38,8 @@ public class Grid extends JPanel implements MouseListener {
 	public int mouseY;
 	public int xMat;
 	public int yMat;
+	
+	public Player player;
 	
 	public Grid()
 	{
@@ -64,10 +66,11 @@ public class Grid extends JPanel implements MouseListener {
 		this.setLocation(0,0);
 		
 		try {
-			gridImage = ImageIO.read(new File(path));
+			this.gridImage = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			System.out.println("Failed to load image");
 		}
+		
 	}
 
 	@Override
@@ -87,7 +90,7 @@ public class Grid extends JPanel implements MouseListener {
 				Y++;
 			}
 			Y--;
-			if (X > GRID_SIZE-1 || Y > GRID_SIZE-1) {
+			if (X > GRID_SIZE-1 || Y > GRID_SIZE-1 || X < 0 || Y < 0) {
 				System.out.println("Clicked outside the window");
 			} else {
 				this.setxMat(X);
@@ -98,6 +101,12 @@ public class Grid extends JPanel implements MouseListener {
 				this.getTileMatrix()[X][Y].setClicked(true);
 			
 				repaint();
+				// TODO damage boats
+				if (this.getTileMatrix()[X][Y].isSeaOrBoat() == 0)
+				{
+					this.getPlayer().setTurn(false);
+					repaint();
+				}
 			
 			}
 		}
@@ -152,7 +161,10 @@ public class Grid extends JPanel implements MouseListener {
 						g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
 								TILE_SIZE, TILE_SIZE);
 					} else {
-						//dessiner bateau touchï¿½ ou coulï¿½
+						//dessiner bateau touché ou coulé
+						g2.setColor(Color.red);
+						g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
+								TILE_SIZE, TILE_SIZE);
 					}
 				}
 			}
@@ -197,6 +209,14 @@ public class Grid extends JPanel implements MouseListener {
 
 	public void setMouseY(int mouseY) {
 		this.mouseY = mouseY;
+	}
+
+	public Player getPlayer() {
+		return this.player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 	
 }

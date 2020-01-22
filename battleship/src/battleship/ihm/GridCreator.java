@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import battleship.Player;
 import battleship.components.Boat;
 import battleship.components.Tile;
 
@@ -43,15 +44,15 @@ public class GridCreator extends JPanel {
 	public static final int BORDER_SIZE = 5;
 	public static boolean currentlyPlacingShip = false;
 
-	public GridCreator(Boat[] boats, JFrame app, int playerNumber) {
-		this(boats, 10, app, playerNumber);
+	public GridCreator(Boat[] boats, JFrame app, Player player) {
+		this(boats, 10, app, player);
 	}
 
-	public GridCreator(Boat[] boats, int gridSize, JFrame app, int playerNumber) {
-		this(boats, gridSize, "gridLabels.png", app, playerNumber);
+	public GridCreator(Boat[] boats, int gridSize, JFrame app, Player player) {
+		this(boats, gridSize, "gridLabels.png", app, player);
 	}
 
-	public GridCreator(Boat[] boats, int gridSize, String path, JFrame app, int playerNumber) {
+	public GridCreator(Boat[] boats, int gridSize, String path, JFrame app, Player player) {
 		setLayout(null);
 		setBackground(Color.white);
 		setLocation(0,0);
@@ -69,7 +70,7 @@ public class GridCreator extends JPanel {
 		this.setBoats(boats);
 		panelArray = new JPanel[boats.length];
 		
-		if (playerNumber == 1) {
+		if (player.getPlayerNumber() == 1) {
 			this.playerImage = "BoatPartP1.png";
 		} else {
 			this.playerImage = "BoatPartP2.png";
@@ -279,7 +280,10 @@ public class GridCreator extends JPanel {
 				// sets the location back to the starting position
 				panelArray[shipNum].setLocation(boats[shipNum].getStartingOffGridPosition());
 				// removes the panel from the array
-				removeShipFromGridArray(boats[shipNum], false);
+				if (boats[shipNum].getShipParts() != null)
+				{
+					removeShipFromGridArray(boats[shipNum], false);
+				}
 			}
 		} else {
 			// checks if the panel is on the grid
@@ -324,13 +328,19 @@ public class GridCreator extends JPanel {
 				rotatePanel(panelArray[shipNum]);
 			}
 			// remove the ship from the grid array
-			removeShipFromGridArray(boats[shipNum], false);
+			if(boats[shipNum].getShipParts() != null)
+			{
+				removeShipFromGridArray(boats[shipNum], false);
+			}
 			// sets the panel location to its original location
 			panelArray[shipNum].setLocation(boats[shipNum].getStartingOffGridPosition());
 
 			// if there is no intersection
 		} else {
-			removeShipFromGridArray(boats[shipNum], isVertical);
+			if(boats[shipNum].getShipParts() != null)
+			{
+				removeShipFromGridArray(boats[shipNum], isVertical);
+			}
 			addShipToGridArray(boats[shipNum], new Point(x, y), isVertical);
 
 		}
@@ -374,8 +384,8 @@ public class GridCreator extends JPanel {
 		// loops through the grid array
 		for (int i = 0; i < this.getTileMatrix().length; i++) {
 			for (int j = 0; j < this.getTileMatrix()[i].length; j++) {
-				for (int k = 0; k < ship.getHealth(); k++) {
-					if (this.getTileMatrix()[j][i].isSeaOrBoat() == 1) {
+				for (int k = 0; k < ship.getShipParts().length; k++) {
+					if (this.getTileMatrix()[j][i] == (Tile) ship.getShipParts()[k]) {
 						this.getTileMatrix()[j][i].setSeaOrBoat(0);
 					}
 				}
@@ -388,6 +398,7 @@ public class GridCreator extends JPanel {
 	 */
 	private void addShipToGridArray(Boat ship, Point location, boolean isVertical) {
 
+		Tile[] shipParts = new Tile[ship.getHealth()];
 		// if the location is a valid point in the array
 		if (location.getX() < this.getTileMatrix().length && location.getX() >= 0 && location.getY() < this.getTileMatrix().length
 				&& location.getY() >= 0) {
@@ -397,16 +408,19 @@ public class GridCreator extends JPanel {
 				if (isVertical) {
 					// add a ship piece at the point but with i added to the y
 					// coordinate
-					System.out.println((int) location.getX());
-					System.out.println((int) location.getY() + i);
 					this.getTileMatrix()[(int) location.getX()][(int) location.getY() + i].setSeaOrBoat(1);
+					shipParts[i] = this.getTileMatrix()[(int) location.getX()][(int) location.getY() + i];
 				} else {
 					// add a ship piece at the point but with i added to the x
 					// coordinate
 					this.getTileMatrix()[(int) location.getX() + i][(int) location.getY()].setSeaOrBoat(1);
-					System.out.println((int) location.getX() + i);
-					System.out.println((int) location.getY());
+					shipParts[i] = this.getTileMatrix()[(int) location.getX() + i][(int) location.getY()];
 				}
+			}
+			ship.setShipParts(shipParts);
+			System.out.println(ship.getBoatName() + " : ");
+			for(Tile tilePart : ship.getShipParts()) {
+				System.out.println(tilePart.getTileName());
 			}
 		}
 	}

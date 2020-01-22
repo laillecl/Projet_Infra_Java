@@ -2,8 +2,6 @@ package battleship;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-
 import javax.swing.JFrame;
 
 import battleship.ihm.Grid;
@@ -58,39 +56,94 @@ public class GameManager {
 		Player p2 = new Player(2);
 		
 		// Instantiate ships
-		Tile[][] p1Mat = this.placeBoats(this.initBoats(), 1);
-		for(int i = 0; i < 10; i++) {
-			for(int j = 0; j < 10; j++) {
-				System.out.println(p1Mat[i][j].isSeaOrBoat() + " ");
-			}
-			System.out.println("\n");
-		}
-		Tile[][] p2Mat = this.placeBoats(this.initBoats(), 2);
-		// Instantiate grids
-		Grid grid = new Grid(p1Mat);
-		SmallGrid smallGrid = new SmallGrid(gridSize);
-		smallGrid.setLocation(grid.getWidth()+10, grid.getY());
+		Tile[][] p1Mat = this.placeBoats(this.initBoats(), p1);
 		
-		int windowWidth = smallGrid.getX() + smallGrid.getWidth() + 10;
+		Tile[][] p2Mat = this.placeBoats(this.initBoats(), p2);
+		// Instantiate grids
+		Grid gridP1 = new Grid(p2Mat);
+		gridP1.setPlayer(p1);
+		SmallGrid smallGridP1 = new SmallGrid(p1Mat);
+		smallGridP1.setPlayer(p1);
+		
+		Grid gridP2 = new Grid(p1Mat);
+		gridP2.setPlayer(p2);
+		SmallGrid smallGridP2 = new SmallGrid(p2Mat);
+		smallGridP2.setPlayer(p2);
+		
+		smallGridP1.setLocation(gridP1.getWidth()+10, gridP1.getY());
+		
+		int windowWidth = smallGridP1.getX() + smallGridP1.getWidth() + 10;
 		frame.setPreferredSize(new Dimension(windowWidth, frame.getHeight())); 
 		frame.setSize(frame.getPreferredSize());
-		
-		frame.getContentPane().add(grid); // adds the grids to the window
-		frame.getContentPane().add(smallGrid);
-		frame.addMouseListener(grid);
-		frame.setVisible(true);
 		frame.pack();
 		
-		this.gameLoop(p1, p2);
+		frame.getContentPane().add(gridP1); // adds the grids to the window
+		frame.getContentPane().add(smallGridP1);
+		frame.getContentPane().repaint();
+		
+		frame.addMouseListener(gridP1);
+		frame.setVisible(true);
+		
+		this.gameLoop(gridP1, smallGridP1, gridP2, smallGridP2);
 	}
 	
 	// loop method for game turns 
-	public void gameLoop(Player p1, Player p2){
-		while(p1.isTurn == true) {
-			System.out.println("Player" + p1.getPlayerNumber()+ "is playing...");
-			p1.setTurn(false);
+	public void gameLoop(Grid gridP1, SmallGrid smallGridP1, Grid gridP2, SmallGrid smallGridP2)
+	{
+		while (this.isGameRunning())
+		{
+			// Verify if Player 2 has won and all Player 1 boats are sunk
+			if (gridP1.getPlayer().arePlayerBoatsSunk()) 
+			{
+				this.setGameRunning(false);
+				gridP2.getPlayer().setPlayerWon(true);
+			}
+			// While p1 turn
+			while(gridP1.getPlayer().isTurn()) {
+				System.out.println("1");
+			};
+			
+			// Change screen
+			changeTurn(gridP2, smallGridP2);
+			gridP2.getPlayer().setTurn(true);
+			
+			// Verify if Player 1 has won and all Player 2 boats are sunk
+			if (gridP2.getPlayer().arePlayerBoatsSunk()) 
+			{
+				this.setGameRunning(false);
+				gridP1.getPlayer().setPlayerWon(true);
+			}
+			// While p2 turn
+			while(gridP2.getPlayer().isTurn()) {
+				System.out.println("2");
+			};
+			
+			// change screen
+			this.changeTurn(gridP1, smallGridP1);
+			gridP1.getPlayer().setTurn(true);
 			
 		}
+	}
+	
+	public void changeTurn(Grid nextGrid, SmallGrid nextSmallGrid) 
+	{
+		frame.getContentPane().removeAll();
+		frame.getContentPane().revalidate();
+		frame.getContentPane().repaint();
+		
+		nextSmallGrid.setLocation(nextGrid.getWidth()+10, nextGrid.getY());
+		
+		int windowWidth = nextSmallGrid.getX() + nextSmallGrid.getWidth() + 10;
+		frame.setPreferredSize(new Dimension(windowWidth, frame.getHeight())); 
+		frame.setSize(frame.getPreferredSize());
+		frame.pack();
+		
+		frame.getContentPane().add(nextGrid); // adds the grids to the window
+		frame.getContentPane().add(nextSmallGrid);
+		frame.getContentPane().repaint();
+		
+		frame.addMouseListener(nextGrid);
+		frame.setVisible(true);
 	}
 
 
@@ -113,14 +166,15 @@ public class GameManager {
 		this.currentPlayer = currentPlayer;
 	}
 	
-	public Tile[][] placeBoats(Boat[] boats, int playerNumber) 
+	public Tile[][] placeBoats(Boat[] boats, Player player) 
 	{
-		GridCreator creator = new GridCreator(boats, 10, frame, playerNumber);
+		GridCreator creator = new GridCreator(boats, 10, frame, player);
 		creator.setup();
 		frame.getContentPane().add(creator);
 		frame.getContentPane().repaint();
 		frame.setVisible(true);
 		while (!creator.isSetupOver()) {}
+		player.setPlayerBoats(creator.getBoats());
 		frame.getContentPane().removeAll();
 		frame.getContentPane().revalidate();
 		frame.getContentPane().repaint();

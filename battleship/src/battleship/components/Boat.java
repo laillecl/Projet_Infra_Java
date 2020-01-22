@@ -16,28 +16,34 @@ public class Boat {
 	private String orientation;
 	private Tile[] shipParts;
 	private boolean shipSunk;
+	private String boatName;
 	
 	public Boat(String name)
 	{
 		switch(name)
 		{
 		case "Carrier":
+			this.setBoatName(name);
 			this.setHealth(CARRIER_LENGTH);
 			this.setShipSunk(false);
 			break;
 		case "Battleship":
+			this.setBoatName(name);
 			this.setHealth(BATTLESHIP_LENGTH);
 			this.setShipSunk(false);
 			break;
 		case "Cruiser":
+			this.setBoatName(name);
 			this.setHealth(CRUISER_LENGTH);
 			this.setShipSunk(false);
 			break;
 		case "Submarine":
+			this.setBoatName(name);
 			this.setHealth(SUBMARINE_LENGTH);
 			this.setShipSunk(false);
 			break;
 		case "Destroyer":
+			this.setBoatName(name);
 			this.setHealth(DESTROYER_LENGTH);
 			this.setShipSunk(false);
 			break;
@@ -47,6 +53,14 @@ public class Boat {
 	}
 	
 	// Getters and setters
+
+	public String getBoatName() {
+		return this.boatName;
+	}
+
+	public void setBoatName(String name) {
+		this.boatName = name;
+	}
 
 	public int getHealth() {
 		return this.health;
