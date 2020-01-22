@@ -108,6 +108,7 @@ public class Boat {
 	public void takeDamage()
 	{
 		this.setHealth(this.getHealth()-1);
+		this.shipSunk();
 	}
 	
 	public void shipSunk()
@@ -125,11 +126,6 @@ public class Boat {
 			if(tile.getPositionX() == this.getShipParts()[i].getPositionX() 
 					&& tile.getPositionY() == this.getShipParts()[i].getPositionY())
 			{
-				if(this.getHealth()>1) {
-					this.takeDamage();
-				}else {
-					this.setShipSunk(true);
-				}
 				return true;
 			}
 		}

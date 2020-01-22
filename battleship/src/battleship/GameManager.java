@@ -2,6 +2,8 @@ package battleship;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.JFrame;
 
 import battleship.ihm.Grid;
@@ -59,14 +61,17 @@ public class GameManager {
 		Tile[][] p1Mat = this.placeBoats(this.initBoats(), p1);
 		
 		Tile[][] p2Mat = this.placeBoats(this.initBoats(), p2);
-		// Instantiate grids
+		// Instantiate grids for P1
 		Grid gridP1 = new Grid(p2Mat);
 		gridP1.setPlayer(p1);
+		gridP1.setOpponent(p2);
 		SmallGrid smallGridP1 = new SmallGrid(p1Mat);
 		smallGridP1.setPlayer(p1);
 		
+		// Instantiate grids for P2
 		Grid gridP2 = new Grid(p1Mat);
 		gridP2.setPlayer(p2);
+		gridP2.setOpponent(p1);
 		SmallGrid smallGridP2 = new SmallGrid(p2Mat);
 		smallGridP2.setPlayer(p2);
 		
@@ -99,12 +104,16 @@ public class GameManager {
 				gridP2.getPlayer().setPlayerWon(true);
 			}
 			// While p1 turn
-			while(gridP1.getPlayer().isTurn()) {
-				System.out.println("1");
-			};
+			while(gridP1.getPlayer().isTurn()) {/* TODO solution boucle vide */ System.out.println("1");};
+			frame.removeMouseListener(gridP1);
 			
 			// Change screen
-			changeTurn(gridP2, smallGridP2);
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			changeTurn(gridP1, gridP2, smallGridP2);
 			gridP2.getPlayer().setTurn(true);
 			
 			// Verify if Player 1 has won and all Player 2 boats are sunk
@@ -114,22 +123,28 @@ public class GameManager {
 				gridP1.getPlayer().setPlayerWon(true);
 			}
 			// While p2 turn
-			while(gridP2.getPlayer().isTurn()) {
-				System.out.println("2");
-			};
+			while(gridP2.getPlayer().isTurn()) {/* TODO solution boucle vide */ System.out.println("2");};
+			frame.removeMouseListener(gridP2);
 			
 			// change screen
-			this.changeTurn(gridP1, smallGridP1);
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			this.changeTurn(gridP2, gridP1, smallGridP1);
 			gridP1.getPlayer().setTurn(true);
 			
 		}
 	}
 	
-	public void changeTurn(Grid nextGrid, SmallGrid nextSmallGrid) 
+	public void changeTurn(Grid currentGrid, Grid nextGrid, SmallGrid nextSmallGrid) 
 	{
 		frame.getContentPane().removeAll();
 		frame.getContentPane().revalidate();
 		frame.getContentPane().repaint();
+		frame.removeMouseListener(currentGrid);
+		System.out.println(frame.getContentPane().getComponentCount());
 		
 		nextSmallGrid.setLocation(nextGrid.getWidth()+10, nextGrid.getY());
 		

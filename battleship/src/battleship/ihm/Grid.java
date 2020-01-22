@@ -40,6 +40,7 @@ public class Grid extends JPanel implements MouseListener {
 	public int yMat;
 	
 	public Player player;
+	public Player opponent;
 	
 	public Grid()
 	{
@@ -95,19 +96,33 @@ public class Grid extends JPanel implements MouseListener {
 			} else {
 				this.setxMat(X);
 				this.setyMat(Y);
-				System.out.println("Un clic en " + this.getMouseX() + " et " + this.getMouseY() + " Les coordonnees sont " + this.getxMat() + " et " + this.getyMat());
-				
 				System.out.println(this.getTileMatrix()[X][Y].getTileName() + " : " + this.getTileMatrix()[X][Y].isSeaOrBoat());
-				this.getTileMatrix()[X][Y].setClicked(true);
-			
-				repaint();
-				// TODO damage boats
-				if (this.getTileMatrix()[X][Y].isSeaOrBoat() == 0)
+				// Check if the tile has already been clicked
+				if (!this.getTileMatrix()[X][Y].isClicked())
 				{
-					this.getPlayer().setTurn(false);
+					this.getTileMatrix()[X][Y].setClicked(true);
+					
+					// Check if it's an enemy boat and damage it
+					if (this.getTileMatrix()[X][Y].isSeaOrBoat() == 0)
+					{
+						this.getPlayer().setTurn(false);
+					} else 
+					{
+						Boat[] enemyBoats = this.getOpponent().getPlayerBoats();
+						for(Boat b : enemyBoats) 
+						{
+							if (b.tileBelongsToBoat(this.getTileMatrix()[X][Y]))
+							{
+								b.takeDamage();
+							}
+						}
+					}
+					
 					repaint();
+				} else
+				{
+					System.out.println("Tir déjà effectué à ces coordonnées !");
 				}
-			
 			}
 		}
 	}
@@ -157,14 +172,29 @@ public class Grid extends JPanel implements MouseListener {
 					// else check if there is a boat part or sea
 					if (this.getTileMatrix()[i][j].isSeaOrBoat() == 0)
 					{
-						g2.setColor(Color.blue);
+						g2.setColor(Color.BLUE);
 						g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
 								TILE_SIZE, TILE_SIZE);
 					} else {
-						//dessiner bateau touché ou coulé
-						g2.setColor(Color.red);
-						g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
-								TILE_SIZE, TILE_SIZE);
+						// check if boat is dead
+						Boat[] enemyBoats = this.getOpponent().getPlayerBoats();
+						for(Boat b : enemyBoats) 
+						{
+							if (b.tileBelongsToBoat(this.getTileMatrix()[i][j]))
+							{
+								if (b.isShipSunk())
+								{
+									g2.setColor(Color.BLACK);
+									g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i) + 1, Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j) +1,
+											TILE_SIZE-2, TILE_SIZE-2);
+								} else
+								{
+									g2.setColor(Color.RED);
+									g2.fillRect(X_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * i), Y_ORIGIN + BORDER_SIZE + ((TILE_SIZE + BORDER_SIZE) * j),
+											TILE_SIZE, TILE_SIZE);
+								}
+							}
+						}
 					}
 				}
 			}
@@ -217,6 +247,14 @@ public class Grid extends JPanel implements MouseListener {
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public Player getOpponent() {
+		return this.opponent;
+	}
+
+	public void setOpponent(Player opponent) {
+		this.opponent = opponent;
 	}
 	
 }
