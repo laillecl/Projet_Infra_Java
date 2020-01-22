@@ -34,6 +34,7 @@ public class DemineurGrille extends JPanel implements MouseListener{
 	public boolean victoire = false;
 	public boolean flag = false;
 	public int pourcentageBombes = 5;
+	public int compteurPointsVictoire = 0;
 	
 	public static final int GRID_SIZE = 15;
 	public static final int X_ORIGIN = 20; // X coordinate of the top left
@@ -92,8 +93,18 @@ public class DemineurGrille extends JPanel implements MouseListener{
 		return this.pourcentageBombes;
 	}
 	
+	public void setCompteurPointsVictoire(int compteurPointsVictoire) {
+		this.compteurPointsVictoire = compteurPointsVictoire;
+	}
+	
+	public int getCompteurPointsVictoire() {
+		return this.compteurPointsVictoire;
+	}
+	
+	
 	public void resetMatrice() {
 		construireMatrice();
+		this.setCompteurPointsVictoire(0);
 		this.setVictoire(false);
 		this.setDefaite(false);
 		for (int i = 0; i < this.size; i++) {
@@ -381,7 +392,7 @@ public class DemineurGrille extends JPanel implements MouseListener{
 					
 					// SET VICTOIRE
 					if(this.getVictoire() == true) {
-							
+						int compteur = 1;
 						this.getDemineurCase(i,	j).setIsClicked(true);
 						Font font2 = new Font("Arial", Font.BOLD, 24);
 						g2.setColor(Color.green);
@@ -390,28 +401,37 @@ public class DemineurGrille extends JPanel implements MouseListener{
 						g2.setFont(myFont);
 						//ANNEK
 						//ICI ON AJOUTE LES POINTS DE LA VICTOIRE
-						try{  
-					    	 //Connexion bdd
-					    	 Class.forName("com.mysql.cj.jdbc.Driver");  
-					    	 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root","");  
-					    	 //Requete SQL
-					    	 Statement stmt=con.createStatement();  
-					    	 //Verification username
-					    	 String first_name;
-					    	 first_name = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");
-					    	 //Connexion bdd
-					    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
-					    	 while(rs.next()) {
-					    		 if(rs.getString(2).equals(first_name)) {
-					    			 AddPointDemineur ajoutPoints = new AddPointDemineur(first_name);
-							    		ajoutPoints.ajouterPoints();
-					    		 }
-					    	 }
-					    	 con.close();  
-					     }
-					     catch(Exception e){ 
-					    	 System.out.println(e);
-					    }
+//						if(this.getCompteurPointsVictoire() == 1) {
+							try{  
+								 System.out.println("testFin");
+						    	 //Connexion bdd
+								 /*
+						    	 Class.forName("com.mysql.cj.jdbc.Driver");  
+						    	 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root","");  
+						    	 */
+								 Class.forName("org.postgresql.Driver");
+						    	 Connection con=DriverManager.getConnection("jdbc:postgresql://192.168.4.213:5432/projet_infra","admin","adminadmin5");  
+						    	 //Requete SQL
+						    	 Statement stmt=con.createStatement();  
+						    	 //Verification username
+						    	 String first_name;
+						    	 first_name = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");
+						    	 //Connexion bdd
+						    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
+						    	 while(rs.next()) {
+						    		 if(rs.getString(2).equals(first_name)) {
+						    			 AddPointDemineur ajoutPoints = new AddPointDemineur(first_name);
+								    		ajoutPoints.ajouterPoints();
+						    		 }
+						    	 }
+						    	 con.close();  
+						     }
+						     catch(Exception e){ 
+								 System.out.println("testError");
+						    	 System.out.println(e);
+						     }
+//						}
+						this.setCompteurPointsVictoire(this.getCompteurPointsVictoire() + 1);
 						
 							
 					}
@@ -445,21 +465,21 @@ public class DemineurGrille extends JPanel implements MouseListener{
 			mouseY = e.getY();
 			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
 			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
-			System.out.println("");
-			System.out.println("Drapeau Global : " + this.getFlag());
-			System.out.println("Drapeau Local : " + this.getDemineurCase(xMat,yMat).getDrapeau());
-			System.out.println("Drapeau Local Boolean : " + this.getDemineurCase(xMat,yMat).getIsFlagged());
+//			System.out.println("");
+//			System.out.println("Drapeau Global : " + this.getFlag());
+//			System.out.println("Drapeau Local : " + this.getDemineurCase(xMat,yMat).getDrapeau());
+//			System.out.println("Drapeau Local Boolean : " + this.getDemineurCase(xMat,yMat).getIsFlagged());
 	    }
 		else if(buttonDown == MouseEvent.BUTTON3) {
-			this.setFlag(true);
-			mouseX = e.getX();
-			mouseY = e.getY();
-			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
-			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
-			System.out.println("");
-			System.out.println("Drapeau Global : " + this.getFlag());
-			System.out.println("Drapeau Local : " + this.getDemineurCase(xMat,yMat).getDrapeau());
-			System.out.println("Drapeau Local Boolean : " + this.getDemineurCase(xMat,yMat).getIsFlagged());
+//			this.setFlag(true);
+//			mouseX = e.getX();
+//			mouseY = e.getY();
+//			xMat = (mouseX - X_ORIGIN)/(TILE_SIZE + BORDER_SIZE);
+//			yMat = (mouseY - Y_ORIGIN)/(TILE_SIZE + BORDER_SIZE) -1;
+//			System.out.println("");
+//			System.out.println("Drapeau Global : " + this.getFlag());
+//			System.out.println("Drapeau Local : " + this.getDemineurCase(xMat,yMat).getDrapeau());
+//			System.out.println("Drapeau Local Boolean : " + this.getDemineurCase(xMat,yMat).getIsFlagged());
 		}
 		
 	}
