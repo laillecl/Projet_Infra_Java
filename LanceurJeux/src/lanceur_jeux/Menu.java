@@ -55,8 +55,9 @@ public class Menu extends JFrame {
 		JButton buttonDemineur=new JButton("Démineur");
 	    JButton buttonBattleShip=new JButton("Bataille Navale");
 	    buttonDemineur.setBounds(125,100,120,30); 
-	    buttonBattleShip.setBounds(125,150,120,30); 
-	    this.linkButton(buttonDemineur);
+	    buttonBattleShip.setBounds(125,150,120,30);
+	    this.linkButtonDemineur(buttonDemineur);
+	    this.linkButtonBattleShip(buttonBattleShip);
 	    frame.add(buttonDemineur, BorderLayout.CENTER);  
 	    frame.add(buttonBattleShip, BorderLayout.CENTER); 
 	}
@@ -69,7 +70,7 @@ public class Menu extends JFrame {
 		this.name = name;
 	}
 	
-	public void linkButton(JButton bouton) {
+	public void linkButtonDemineur(JButton bouton) {
 		bouton.addActionListener(new ActionListener() { 
 		    public void actionPerformed(ActionEvent e) { 
 		    	//TODO - Pour lancer d'autres application, modifier le chemin ci-dessous
@@ -84,7 +85,23 @@ public class Menu extends JFrame {
 		    }
 		});		
 	}
-	
+
+	public void linkButtonBattleShip(JButton bouton) {
+		bouton.addActionListener(new ActionListener() { 
+		    public void actionPerformed(ActionEvent e) { 
+		    	System.out.print("ok clic");
+		        File file = new File("D:\\Anne-Camille\\Documents\\I2\\Logiciels Et Donnes\\test_battleship.jar");		        
+		        Desktop desktop = Desktop.getDesktop();
+		        if(file.exists())
+					try {
+						desktop.open(file);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+		    }
+		});		
+	}
+
 	public void addTitre(JPanel panel) {
 		JLabel label = new JLabel(); 
 	    label.setText("Menu de jeux"); 

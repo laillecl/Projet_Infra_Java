@@ -7,7 +7,7 @@ import java.awt.Color;
 import org.junit.jupiter.api.Test;
 
 class TestTile {
-
+/*
 	@Test
 	void testConstructeur1() {
 		Tile tile = new Tile("test", 1, 1, 10, Color.black);
@@ -136,6 +136,5 @@ class TestTile {
 		tile.setColor(Color.blue);
 		assertEquals(Color.blue, tile.getColor());
 	}
-	
-	
+	*/
 }
