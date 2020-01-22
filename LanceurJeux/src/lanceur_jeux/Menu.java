@@ -12,12 +12,15 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 
 
@@ -110,31 +113,46 @@ public class Menu extends JFrame {
 	    panel.add(label);
 	}
 	
+	
 	public static void main(String[] args) {  
 	     try{  
 	    	 //Connexion bdd
-	    	 Class.forName("com.mysql.cj.jdbc.Driver");  
-	    	 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root","");  
-	    	 
+	    	 //Class.forName("com.mysql.cj.jdbc.Driver");  
+	    	 Class.forName("org.postgresql.Driver");
+
+	    	 //Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root","");  
+	    	 Connection con=DriverManager.getConnection("jdbc:postgresql://192.168.4.213:5432/projet_infra","admin","adminadmin5");  
+	    	    	 
 	    	 //Requete SQL
 	    	 Statement stmt=con.createStatement();  
 	    	 
 	    	 //Verification username
-	    	 String first_name;	    			 
-	    	 first_name = JOptionPane.showInputDialog("Entrez votre nom d'utilisateur");
 	    	 
+	    	 //TEST Multiples inputs
+	    	 JTextField xField = new JTextField(20);
+	    	 JTextField yField = new JPasswordField(20);
+	    	 JPanel myPanel = new JPanel();
+	    	 myPanel.add(new JLabel("utilisateur:"));
+	    	 myPanel.add(xField);
+	    	 myPanel.add(Box.createHorizontalStrut(15));   
+	    	 myPanel.add(new JLabel("mot de passe:"));
+	    	 myPanel.add(yField);
+	    	 
+	    	 
+	    	int result = JOptionPane.showConfirmDialog(null, myPanel,  "Connexion aux mini jeux", JOptionPane.OK_CANCEL_OPTION);
+		    String first_name;	    			 
+		    first_name = xField.getText();
+		    String mdp = yField.getText();
 	    	 //Connexion bdd
 	    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
 	    	 while(rs.next()) {
-	    		 if(rs.getString(2).equals(first_name)) {
+	    		 if(rs.getString(2).equals(first_name) && rs.getString(3).equals(mdp)) {
 	    			//Affichage des jeux
 	    		     Menu menu = new Menu();
 	    		     menu.setName(first_name);
 	   	    	 }
 	    	 }
 	    	 con.close();  
-
-	    	 //TODO - Regarder lien HTTP/JAVA (postman), HTML lien PHP, PHP, lien BDD
 	     }
 	     catch(Exception e){ 
 	    	 System.out.println(e);

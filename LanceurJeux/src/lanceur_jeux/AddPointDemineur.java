@@ -26,8 +26,12 @@ public class AddPointDemineur {
 	void connexionBDD() {
 		try{  
 	    	 //Connexion bdd
+			/*
 	    	 Class.forName("com.mysql.cj.jdbc.Driver");  
-	    	 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root","");  
+	    	 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root",""); 
+	    	 */
+			Class.forName("org.postgresql.Driver");
+	    	 Connection con=DriverManager.getConnection("jdbc:postgresql://192.168.4.213:5432/projet_infra","admin","adminadmin5");
 	    	 this.ajoutPointsBDD(con);  
 	     }
 	     catch(Exception e){ 

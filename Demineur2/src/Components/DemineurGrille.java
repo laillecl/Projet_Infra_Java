@@ -405,8 +405,12 @@ public class DemineurGrille extends JPanel implements MouseListener{
 							try{  
 								 System.out.println("testFin");
 						    	 //Connexion bdd
+								 /*
 						    	 Class.forName("com.mysql.cj.jdbc.Driver");  
 						    	 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/projet_infra","root","");  
+						    	 */
+								 Class.forName("org.postgresql.Driver");
+						    	 Connection con=DriverManager.getConnection("jdbc:postgresql://192.168.4.213:5432/projet_infra","admin","adminadmin5");  
 						    	 //Requete SQL
 						    	 Statement stmt=con.createStatement();  
 						    	 //Verification username
