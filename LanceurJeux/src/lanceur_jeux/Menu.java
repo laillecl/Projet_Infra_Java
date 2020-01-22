@@ -146,7 +146,10 @@ public class Menu extends JFrame {
 	    	 //Connexion bdd
 	    	 ResultSet rs=stmt.executeQuery("select * from utilisateur");  
 	    	 while(rs.next()) {
-	    		 if(rs.getString(2).equals(first_name) && rs.getString(3).equals(mdp)) {
+	    		 if(rs.getString(2).equals(first_name) && rs.getString(2).equals(mdp)) {
+//	    			 String mdpici = rs.getString(3);
+//	    			 boolean verite = 	BCrypt.checkpw(mdp, mdpici);
+//	    			 System.out.print(verite);
 	    			//Affichage des jeux
 	    		     Menu menu = new Menu();
 	    		     menu.setName(first_name);
