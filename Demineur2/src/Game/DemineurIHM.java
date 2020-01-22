@@ -44,7 +44,7 @@ public class DemineurIHM extends JFrame implements ActionListener{
 		difficulte.add(facile);
 		difficulte.add(moyen);
 		difficulte.add(difficile);
-		moyen.setSelected(true);
+		facile.setSelected(true);
 		
 		demineurGrille.add(facile);
 		demineurGrille.add(moyen);
