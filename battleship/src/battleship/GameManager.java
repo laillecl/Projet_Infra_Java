@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
+import battleship.ihm.GameOverScreen;
 import battleship.ihm.Grid;
 import battleship.ihm.GridCreator;
 import battleship.ihm.SmallGrid;
@@ -51,6 +52,11 @@ public class GameManager {
 		this.setUpWindow();
 		
 		this.setGameRunning(true);
+		
+		MainMenu startMenu = new MainMenu(frame);
+		startMenu.loadTitleScreen();
+		while(startMenu.isImageVisible()){}
+		
 		// Create 2 players
 		Player p1 = new Player(1);
 		p1.setTurn(true);
@@ -90,6 +96,14 @@ public class GameManager {
 		frame.setVisible(true);
 		
 		this.gameLoop(gridP1, smallGridP1, gridP2, smallGridP2);
+		if (p1.hasPlayerWon())
+		{
+			GameOverScreen gameOver = new GameOverScreen(frame, p1);
+			gameOver.loadEndScreen();
+		} else {
+			GameOverScreen gameOver = new GameOverScreen(frame, p2);
+			gameOver.loadEndScreen();
+		}
 	}
 	
 	// loop method for game turns 
@@ -98,43 +112,51 @@ public class GameManager {
 		while (this.isGameRunning())
 		{
 			// Verify if Player 2 has won and all Player 1 boats are sunk
-			if (gridP1.getPlayer().arePlayerBoatsSunk()) 
+			if (gridP1.getPlayer().arePlayerBoatsSunk() && this.isGameRunning()) 
 			{
 				this.setGameRunning(false);
 				gridP2.getPlayer().setPlayerWon(true);
+				frame.removeMouseListener(gridP1);
+				frame.removeMouseListener(gridP2);
+			} else 
+			{
+				// While p1 turn
+				while(gridP1.getPlayer().isTurn() && !gridP2.getPlayer().arePlayerBoatsSunk()) {/* TODO solution boucle vide */ System.out.println("1");};
+				frame.removeMouseListener(gridP1);
+				
+				// Change screen
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				changeTurn(gridP1, gridP2, smallGridP2);
+				gridP2.getPlayer().setTurn(true);
 			}
-			// While p1 turn
-			while(gridP1.getPlayer().isTurn()) {/* TODO solution boucle vide */ System.out.println("1");};
-			frame.removeMouseListener(gridP1);
 			
-			// Change screen
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			changeTurn(gridP1, gridP2, smallGridP2);
-			gridP2.getPlayer().setTurn(true);
 			
 			// Verify if Player 1 has won and all Player 2 boats are sunk
-			if (gridP2.getPlayer().arePlayerBoatsSunk()) 
+			if (gridP2.getPlayer().arePlayerBoatsSunk() && this.isGameRunning()) 
 			{
 				this.setGameRunning(false);
 				gridP1.getPlayer().setPlayerWon(true);
+				frame.removeMouseListener(gridP1);
+				frame.removeMouseListener(gridP2);
+			} else
+			{
+				// While p2 turn
+				while(gridP2.getPlayer().isTurn() && !gridP1.getPlayer().arePlayerBoatsSunk()) {/* TODO solution boucle vide */ System.out.println("2");};
+				frame.removeMouseListener(gridP2);
+				
+				// change screen
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				this.changeTurn(gridP2, gridP1, smallGridP1);
+				gridP1.getPlayer().setTurn(true);
 			}
-			// While p2 turn
-			while(gridP2.getPlayer().isTurn()) {/* TODO solution boucle vide */ System.out.println("2");};
-			frame.removeMouseListener(gridP2);
-			
-			// change screen
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			this.changeTurn(gridP2, gridP1, smallGridP1);
-			gridP1.getPlayer().setTurn(true);
-			
 		}
 	}
 	
@@ -144,7 +166,6 @@ public class GameManager {
 		frame.getContentPane().revalidate();
 		frame.getContentPane().repaint();
 		frame.removeMouseListener(currentGrid);
-		System.out.println(frame.getContentPane().getComponentCount());
 		
 		nextSmallGrid.setLocation(nextGrid.getWidth()+10, nextGrid.getY());
 		
