@@ -2,9 +2,6 @@ package battleship.components;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.awt.Color;
-
-import org.junit.jupiter.api.Test;
 
 class TestTile {
 /*

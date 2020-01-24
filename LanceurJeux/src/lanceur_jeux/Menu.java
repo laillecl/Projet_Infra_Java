@@ -22,9 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.sun.tools.javac.Main;
-
-
 
 //TODO - Relier bouton Démineur à Demineur.java
 
@@ -41,8 +38,8 @@ public class Menu extends JFrame {
             {
             	//java.net.URL url = Main.class.getResource("/image/image.png");
                 super.paintComponent(g);
-               ImageIcon m = new ImageIcon(path);
-                //ImageIcon m = new ImageIcon(Object.class.getResource("/image/images.png"));
+               //ImageIcon m = new ImageIcon(path);
+                ImageIcon m = new ImageIcon(Menu.class.getResource("/image/images.png"));
                 Image monImage = m.getImage();
                 g.drawImage(monImage, 0, 0,this);
                 /*
