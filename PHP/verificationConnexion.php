@@ -1,15 +1,13 @@
 <?php
-try
-{
-	// On se connecte à MySQL
-	$bdd = new PDO('mysql:host=localhost;dbname=projet_infra;charset=utf8', 'root', '');
-}
-catch(Exception $e)
-{
-	// En cas d'erreur, on affiche un message et on arrête tout
-        die('Erreur : '.$e->getMessage());
-}
+
+
 	
+	// Connexion, sélection de la base de données - POSTGRESQL
+	//$bdd = new PDO('mysql:host=localhost;dbname=projet_infra;charset=utf8', 'root', '');
+
+	// Connexion, sélection de la base de données - MYSQL
+	$bdd = new PDO('mysql:host=localhost;dbname=projet_infra;charset=utf8', 'root', '');
+
 	// On récupère tout le contenu de la table utilisateurs
 	$reponse = $bdd->query('SELECT * FROM utilisateur');
 	$marqueur = 0;
@@ -19,10 +17,15 @@ catch(Exception $e)
 	{
 		//On regarde si les login et mots de passe sont bons
 		if ($donnees['user_name'] == $_POST['login'] and password_verify($_POST['motdepasse'], $donnees['password'])){
-
 			// L'utilisateur est connu et peut accéder à l'application des jeux
+			$compt = 1;
+			echo ('Votre score est actuellement de ' . $donnees['score'] );
 
-			echo 'ok l utilisateur est connu';
+			//TODO - Bouton
+			$urla = "telechargement.php";
+			$textea = "<br> Telechargement de l'application";
+			echo '<a href = "'.$urla.'">'.$textea.'</a>';
+
 			$marqueur = 1;
 
 		}

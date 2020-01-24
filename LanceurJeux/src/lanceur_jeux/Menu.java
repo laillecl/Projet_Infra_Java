@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.sun.tools.javac.Main;
 
 
 
@@ -29,22 +30,34 @@ import javax.swing.JTextField;
 
 public class Menu extends JFrame {  
 	String path = "image.png";
+	
 	public String name;
 	
 	public Menu() {
 		super();
 		//Ajout d'un fond d'écran
 	    JPanel panel = new JPanel(){
-            protected void paintComponent(Graphics g) 
+            public void paintComponent(Graphics g) 
             {
+            	//java.net.URL url = Main.class.getResource("/image/image.png");
                 super.paintComponent(g);
-                ImageIcon m = new ImageIcon(path);
+               ImageIcon m = new ImageIcon(path);
+                //ImageIcon m = new ImageIcon(Object.class.getResource("/image/images.png"));
                 Image monImage = m.getImage();
                 g.drawImage(monImage, 0, 0,this);
+                /*
+                ImageIcon m = new ImageIcon(url);
+                JFrame frame = new JFrame();
+                frame.add(new JLabel(m));
+                frame.pack();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+                */
             }
         };
 		panel.repaint();
-		//Ajout des éléments sur le panel
+		//Ajout des éléments sur le panel+
 		this.addButton(this);
 	    this.addTitre(panel);
 	    this.add(panel);
