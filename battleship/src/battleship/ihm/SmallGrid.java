@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -47,11 +46,11 @@ public class SmallGrid extends JPanel {
 		
 		// loads the grid file
 		try {
-			this.gridImage = ImageIO.read(new File("gridSmallLabels.png"));
-			this.P1Boat = ImageIO.read(new File("BoatPartP1.png"));
-			this.P1BoatHit = ImageIO.read(new File("BoatPartHitP1.png"));
-			this.P2Boat = ImageIO.read(new File("BoatPartP2.png"));
-			this.P2BoatHit = ImageIO.read(new File("BoatPartHitP2.png"));
+			this.gridImage = ImageIO.read(SmallGrid.class.getResource("/battleship/image/gridSmallLabels.png"));
+			this.P1Boat = ImageIO.read(SmallGrid.class.getResource("/battleship/image/BoatPartP1.png"));
+			this.P1BoatHit = ImageIO.read(SmallGrid.class.getResource("/battleship/image/BoatPartHitP1.png"));
+			this.P2Boat = ImageIO.read(SmallGrid.class.getResource("/battleship/image/BoatPartP2.png"));
+			this.P2BoatHit = ImageIO.read(SmallGrid.class.getResource("/battleship/image/BoatPartHitP2.png"));
 		} catch (IOException e) {
 			System.out.println("Failed to load image");
 		}

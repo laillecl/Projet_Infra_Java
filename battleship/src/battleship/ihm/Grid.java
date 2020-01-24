@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -44,17 +43,17 @@ public class Grid extends JPanel implements MouseListener {
 	
 	public Grid()
 	{
-		this(new Tile[GRID_SIZE][GRID_SIZE], "gridLabels.png");
+		this(new Tile[GRID_SIZE][GRID_SIZE], "/battleship/image/gridLabels.png");
 	}
 	
 	public Grid(Tile[][] tileMatrix)
 	{
-		this(tileMatrix, "gridLabels.png");
+		this(tileMatrix, "/battleship/image/gridLabels.png");
 	}
  
 	public Grid(int size)
 	{
-		this(new Tile[size][size], "gridLabels.png");
+		this(new Tile[size][size], "/battleship/image/gridLabels.png");
 	}
 	
 	public Grid(Tile[][] tileMatrix, String path)
@@ -67,7 +66,8 @@ public class Grid extends JPanel implements MouseListener {
 		this.setLocation(0,0);
 		
 		try {
-			this.gridImage = ImageIO.read(new File(path));
+			this.gridImage = ImageIO.read(Grid.class.getResource(path));
+			
 		} catch (IOException e) {
 			System.out.println("Failed to load image");
 		}

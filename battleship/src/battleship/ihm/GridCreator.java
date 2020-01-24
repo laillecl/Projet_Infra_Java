@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
@@ -49,7 +48,7 @@ public class GridCreator extends JPanel {
 	}
 
 	public GridCreator(Boat[] boats, int gridSize, JFrame app, Player player) {
-		this(boats, gridSize, "gridLabels.png", app, player);
+		this(boats, gridSize, "/battleship/image/gridLabels.png", app, player);
 	}
 
 	public GridCreator(Boat[] boats, int gridSize, String path, JFrame app, Player player) {
@@ -71,13 +70,13 @@ public class GridCreator extends JPanel {
 		panelArray = new JPanel[boats.length];
 		
 		if (player.getPlayerNumber() == 1) {
-			this.playerImage = "BoatPartP1.png";
+			this.playerImage = "/battleship/image/BoatPartP1.png";
 		} else {
-			this.playerImage = "BoatPartP2.png";
+			this.playerImage = "/battleship/image/BoatPartP2.png";
 		}
 
 		try {
-			this.gridImage = ImageIO.read(new File(path));
+			this.gridImage = ImageIO.read(GridCreator.class.getResource(path));
 		} catch (IOException e) {
 			System.out.println("Failed to load image");
 		}
@@ -160,7 +159,7 @@ public class GridCreator extends JPanel {
 			// loops through the ship pieces in the ship
 			for (int i = 0; i < boats[j].getHealth(); i++) {
 				// adds labels containing each image to the panel
-				ImageIcon icon = new ImageIcon(new ImageIcon(this.playerImage).getImage());
+				ImageIcon icon = new ImageIcon(new ImageIcon(GridCreator.class.getResource(this.playerImage)).getImage());
 				JLabel label = new JLabel(icon);
 				panel.add(label);
 				panel.add(Box.createRigidArea(new Dimension(BORDER_SIZE + 2, 0)));

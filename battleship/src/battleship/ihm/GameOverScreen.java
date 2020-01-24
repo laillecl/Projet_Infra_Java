@@ -22,9 +22,9 @@ public class GameOverScreen implements MouseListener{
 	public GameOverScreen(JFrame app, Player p){
 		window = (JPanel)app.getContentPane();
 		if (p.getPlayerNumber() == 1){
-			backgroundImageIcon = new ImageIcon("P1Win.png");
+			backgroundImageIcon = new ImageIcon(GameOverScreen.class.getResource("/battleship/image/P1Win.png"));
 		}else{
-			backgroundImageIcon = new ImageIcon("P2Win.png");
+			backgroundImageIcon = new ImageIcon(GameOverScreen.class.getResource("/battleship/image/P2Win.png"));
 		}
 		Image bkgImage = backgroundImageIcon.getImage();
 		Image scaledBkgImage = bkgImage.getScaledInstance(window.getWidth(),

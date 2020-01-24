@@ -17,7 +17,7 @@ public class MainMenu {
 	
 	public MainMenu(JFrame theWindow){
 		window = theWindow;
-		backgroundImageIcon = new ImageIcon("Title.png");
+		backgroundImageIcon = new ImageIcon(MainMenu.class.getResource("/battleship/image/Title.png"));
 		bkgImageContainer = new JLabel(backgroundImageIcon);
 		isImageVisible = true;
 	}
